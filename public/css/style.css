@@ -1,0 +1,152 @@
+/* ############# Index Page Css Start ##################*/
+/*
+	Color Codes:
+		#0C383B
+		#789F8A
+		#E2D8A3
+		#E1B753
+		#E1694E
+*/
+.bg-dark {
+    background-color: #0C383B!important;
+}
+.navbar-dark .navbar-nav .nav-link {
+    color: #f8f9fa;
+}
+.blank-row-1{
+	margin:1% 0;
+}
+/* Buttons -- START */
+.btn-primary {
+  color: #fff;
+  background-color: #E1694E;
+  border-color: #AF523D;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #FF8C72;
+  border-color: #E1694E;
+  cursor:pointer;
+}
+
+.btn-primary:focus, .btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem #FF8C72;
+}
+
+.btn-outline-primary:not([disabled]):not(.disabled):active, .btn-outline-primary:not([disabled]):not(.disabled).active,
+.show > .btn-outline-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #FF8C72;
+  border-color: #E1694E;
+  box-shadow: 0 0 0 0.2rem #FF8C72;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #49a75f;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+  cursor:pointer;
+}
+
+.btn-success:focus, .btn-success.focus {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+}
+/* Buttons -- END */	
+
+/* Forms -- START */
+.input-group .glyphicon-search{
+		padding: 0 0 0 10px;
+	}
+/* Forms -- END */
+
+/* Tables -- START */
+.table td .btn-success, .table td .btn-danger, .table td .btn-info {
+		cursor:pointer;
+	}
+.table td .btn-info {
+		padding:6px 9px;
+		margin:	0 0 0 5%;
+		cursor:pointer;
+	}
+/* Tables -- END */	
+
+.alerts-row{
+	position: fixed;
+	top: 50%;
+    left: 40%;
+	z-index:9999;
+}
+
+.alerts-row .alert-success,.alerts-row .alert-danger{
+	display:none;
+	position: inherit;
+}
+.alert-success{
+	color: #fff;
+	background-color: #49a75f;
+	border-color: #28a745;
+}
+.alert-danger{
+	color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Media Querries -- START */	
+@media (max-width: 600px){
+	h1, .h1 {
+	  font-size: 2rem;
+	}
+
+	h2, .h2 {
+	  font-size: 1.5rem;
+	}
+
+	h3, .h3 {
+	  font-size: 1.25rem;
+	}
+
+	h4, .h4 {
+	  font-size: 1rem;
+	}
+
+	h5, .h5 {
+	  font-size: 0.75rem;
+	}
+
+	h6, .h6 {
+	  font-size: 0.25rem;
+	}
+	
+	.stock-search-form .btn-primary , .stock-search-form .btn-success{
+		padding: 3px 6px;
+		font-size: 12px;
+		margin: 2% 0;
+	}
+	input.form-control,.input-group .glyphicon-search{
+		padding: 3px 6px;
+		font-size: 12px;
+	}
+	.table td, .table th {
+		padding: .75rem 0;
+		vertical-align: top;
+		border-top: 1px solid #e9ecef;
+		font-size: 12px;
+	}
+	.table td .btn-success, .table td .btn-danger, .table td .btn-info {
+		padding: 3px 6px;
+		font-size: 12px;
+	}
+	.alert-success,.alert-danger {
+		left: 30%;
+		font-size: 12px;
+	}
+}
+/* ############# Index Page Css End ##################*/
