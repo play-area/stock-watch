@@ -13,12 +13,20 @@ $(function() {
 			
 		}
 	});
+	
+	$(".close-alert").click(function(e) 
+	{   
+		$(this).parent().hide();
+	});
 });
 
 function updateCalculations(){
 	//Preventing form submit as it will lead to page refresh
 	event.preventDefault();
 	var formCheckBoxes=$('.calculations-form  .calculation-checkbox');
+	var alertSuccess = $('.alerts-row .alert-success');
+	var alertDanger = $('.alerts-row .alert-danger');
+	var alertInfo = $('.alerts-row .alert-info');
 	formCheckBoxes.each(function() {
 	  if ($(this).is(":checked")) {
             console.log($(this).attr('id')+" is Checked");
@@ -27,14 +35,20 @@ function updateCalculations(){
 	var date= $('.calculations-form  #calculationdate');
 	console.log(date.val());
 	
+	alertSuccess.hide();
+	alertDanger.hide();
+	alertInfo.hide();
+	
 	//Send Ajax Request
 	$.ajax({
 		url: "../app/controllers/performCalculationsController.php",
 		type: "post",
 		data: date,
 		success: function (response) {
-		   console.log(response);                 
-
+			//console.log(response); 
+			event.stopImmediatePropagation();
+			alertInfo.find('div').html(response);
+			alertInfo.fadeIn(2000);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 		   console.log(textStatus, errorThrown);

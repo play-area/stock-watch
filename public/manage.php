@@ -25,11 +25,20 @@
 	
 	<!-- .row -->
 	<div class="row alerts-row">
-		<div class="alert alert-success ">
-			Stock(s) added to Watch List
+		<div class="alert alert-success">
+			<a href="#" class="close-alert" >&times;</a>
+			<div>
+			</div>
 		</div>
-		<div class="alert alert-danger ">
-			Stock(s) removed from Watch List
+		<div class="alert alert-info">
+			<a href="#" class="close-alert" >&times;</a>
+			<div>
+			</div>
+		</div>
+		<div class="alert alert-danger">
+			<a href="#" class="close-alert" >&times;</a>
+			<div>
+			</div>
 		</div>
 	</div>
 	<!-- ./row -->
@@ -102,7 +111,7 @@
 			<form class="calculations-form" method="post" onsubmit="updateCalculations()">
 				<div class="form-group">
 					<label for="calculationdate">Date</label>
-					<input id="calculationdate" name="calculationdate" type="date" placeholder="mm/dd/yyyy" required />
+					<input id="calculationdate" name="calculationdate" type="date" value="2018-01-02" required />
 				</div>
 				<div class="form-group">
 					<input type="checkbox" class="calculation-checkbox" id="avgcandle50" checked />

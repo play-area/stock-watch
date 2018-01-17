@@ -79,12 +79,12 @@
 
 .alerts-row{
 	position: fixed;
-	top: 50%;
-    left: 40%;
+	top: 45%;
+    left: 35%;
 	z-index:9999;
 }
 
-.alerts-row .alert-success,.alerts-row .alert-danger{
+.alerts-row .alert{
 	display:none;
 	position: inherit;
 }
@@ -97,6 +97,12 @@
 	color: #fff;
     background-color: #dc3545;
     border-color: #dc3545;
+}
+.alerts-row .close-alert {
+	position: absolute;
+	right: 10px;
+	top:0px;
+	font-size: 20px;
 }
 
 /* Media Querries -- START */	

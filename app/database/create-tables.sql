@@ -30,12 +30,21 @@ CREATE TABLE IF NOT EXISTS `daily_candlesticks_fo_calculations` (
   `symbol` varchar(10) NOT NULL,
   `market` varchar(10) NOT NULL DEFAULT 'NSE',
   `recorddate` date NOT NULL,
-  `change` decimal(8,2) unsigned,
-  `change_percent` decimal(8,2) unsigned,
-  `volavg50` decimal(8,2) unsigned,
-  `ma20` decimal(8,2) unsigned ,
-  `ma50` decimal(8,2) unsigned ,
-   
+  `open` decimal(8,2) unsigned NOT NULL,
+  `high` decimal(8,2) unsigned NOT NULL,
+  `low` decimal(8,2) unsigned NOT NULL,
+  `close` decimal(8,2) unsigned NOT NULL,
+  `prevclose` decimal(8,2) unsigned NOT NULL,
+  `volume` bigint(20) unsigned NOT NULL,
+  `candle_body` decimal(8,2) unsigned ,
+  `candle_height` decimal(8,2) unsigned ,
+  `change_value` decimal(8,2) NOT NULL ,
+  `change_percent` decimal(8,2) NOT NULL,
+  `volavg50` bigint(20) unsigned NOT NULL,
+  `ma20` decimal(8,2) unsigned NOT NULL,
+  `ma50` decimal(8,2) unsigned NOT NULL,
+  `avg_candle_body_50` decimal(8,2) unsigned NOT NULL,
+  `avg_candle_height_50` decimal(8,2) unsigned NOT NULL,
    PRIMARY KEY (symbol,market, recorddate)
 );
 
