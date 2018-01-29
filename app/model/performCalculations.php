@@ -7,9 +7,45 @@ define('DATE_LIST_QUERY', 'SELECT dc1.symbol, dc1.timestamp, dc1.open,dc1.high,d
 							INNER JOIN(SELECT DISTINCT timestamp FROM daily_candlesticks_fo ORDER BY timestamp desc limit ?) as dc2
 							ON dc1.timestamp=dc2.timestamp
 							GROUP BY dc1.symbol,dc1.timestamp');
+							
+define('WORKING_DAYS','SELECT T1.date_selected FROM (SELECT (CURRENT_DATE - INTERVAL 100 DAY) + INTERVAL a + b DAY AS date_selected
+FROM (SELECT 0 a UNION SELECT 1 a UNION SELECT 2 UNION SELECT 3
+UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7
+UNION SELECT 8 UNION SELECT 9 ) d,
+(SELECT 0 b UNION SELECT 10 UNION SELECT 20
+UNION SELECT 30 UNION SELECT 40 UNION SELECT 50 UNION SELECT 60 UNION SELECT 70 UNION SELECT 80 UNION SELECT 90) m
+WHERE (CURRENT_DATE - INTERVAL 100 DAY) + INTERVAL a + b DAY < CURRENT_DATE
+ORDER BY a + b)T1 WHERE T1.date_selected NOT IN (SELECT HOLIDAYDATE FROM TRADING_HOLIDAYS) AND DAYOFWEEK(T1.date_selected) NOT IN (1,7)
+ORDER BY `T1`.`date_selected`  DESC limit 50');
+
+/*If I run the query on 26th January -> 
+	Then it should check if 26th is a holiday or not, 
+		Check if the data till today is updated for the last 50 days in the daily_candlesticks_fo table.
+			If it is a holiday,
+			then perform calculations for the last 50 day starting from the last working day.
+*/
+
+/*Function to check if the records are updated in the daily candlesticks table*/
+function checkDataInTable($noOfDays){
+	$listOfWorkingDays = getWorkingDays($noOfDays);
+	$listOfRecordedDates = getRecordDates($noOfDays);
+	$result = array_diff($array1, $array2);
+	if(empty($result)){
+		$result = array_diff($array1, $array2);
+	}
+	return $result;
+}
 
 /* Getting Results from database and performing calculations */
 function updateCalculations($calcDate,$noOfDays=50){
+	$errorDates=checkDataInTable($noOfDays);
+	if(!empty($errorDates)){
+		echo("</br><h3>Please check the following dates in the <b>Daily Candlesticks</b> table:</h3></br>");
+		for($errorDates as $errorDate){
+			echo("<br>"+$errorDate);
+		}
+		return;
+	}
 	$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	// Check connection
 	if ($conn->connect_error) {
@@ -175,4 +211,63 @@ function storeCalculationsInDatabase($arrayToStore){
 			}
 			echo("</table>");
 		}
+}
+/* Function to get last n working days for the market*/
+function getWorkingDays($noOfWorkingDays){
+	$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	// Check connection
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+	/* create a prepared statement */
+	$stmt = $conn->prepare("WORKING_DAYS");
+
+    /* bind parameters for markers */
+    $stmt->bind_param("s", $noOfWorkingDays);
+
+    /* execute query */
+    $stmt->execute();
+
+    /* bind result variables */
+    $stmt->bind_result($date);
+
+	// Loop the results and fetch into an array
+	$dates = array();
+	while ($stmt->fetch()) {
+		$dates[] = $date;
+	}
+	//print_r($dates);
+	$stmt->close();
+	$conn->close();
+	
+	return $dates;
+}
+/* Function to get last n records from the daily candlesticks table*/
+function getRecordDates($noOfDays){
+	$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	// Check connection
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+	/* create a prepared statement */
+	$stmt = $conn->prepare(SELECT DISTINCT timestamp FROM daily_candlesticks_fo ORDER BY timestamp desc limit ?);
+
+    /* bind parameters for markers */
+    $stmt->bind_param("s", $noOfDays);
+
+    /* execute query */
+    $stmt->execute();
+
+    /* bind result variables */
+    $stmt->bind_result($timestamp);
+	// Loop the results and fetch into an array
+	$dates = array();
+	while ($stmt->fetch()) {
+		$dates[] = $timestamp;
+	}
+	
+	$stmt->close();
+	$conn->close();
+	
+	return $dates;
 }

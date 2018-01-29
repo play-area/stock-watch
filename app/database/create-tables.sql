@@ -48,3 +48,17 @@ CREATE TABLE IF NOT EXISTS `daily_candlesticks_fo_calculations` (
    PRIMARY KEY (symbol,market, recorddate)
 );
 
+CREATE TABLE IF NOT EXISTS `watchlist_nifty_500` (
+  `company_name` varchar(256) NOT NULL,
+  `industry` varchar(256) NOT NULL,
+  `symbol` varchar(10) NOT NULL,
+  `series` varchar(2) NOT NULL,
+  `isin` varchar(12) NOT NULL,
+  PRIMARY KEY (symbol,series)
+);
+
+CREATE TABLE IF NOT EXISTS `watchlist_nifty_fo` (
+  `symbol` varchar(10) NOT NULL,
+  `series` varchar(2) NOT NULL DEFAULT 'EQ',
+   PRIMARY KEY (symbol)
+);

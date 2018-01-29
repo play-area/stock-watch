@@ -15,13 +15,16 @@ function getBhavCopy($stDate,$edDate,$tz = "Asia/Kolkata"){
 			new DateInterval('P1D'),
 			$endDate->modify( '+1 day')
 		);
+		//Get stocks to update from watchlist
+		$stocksToUpdate=getStocksToUpdate();
+		
 		foreach ($period as $key => $value) {
 			$day = $value->format("D");
 			$isSaturday = strcmp($day,"Sat");
 			$isSunday   = strcmp($day,"Sun");
 			if(!in_array($value->format("Y-m-d"),$listOfHolidays) && $isSaturday!=0 && $isSunday!=0){
 					echo("<h3>Getting Bhav Copy for".$value->format('Y-m-d')."</h3>");
-					getBhavCopyFromNse($value);
+					getBhavCopyFromNse($value,$stocksToUpdate);
 				}
 		}
 	}else if(!empty($startDate) && empty($endDate)){
@@ -32,7 +35,7 @@ function getBhavCopy($stDate,$edDate,$tz = "Asia/Kolkata"){
 }
 
 //Making curl request to NSE.
-function getBhavCopyFromNse($date){
+function getBhavCopyFromNse($date,$stocksToUpdate){
 	//Forming file name
 	$bhavcopy_file = sprintf('cm%s%s%dbhav.csv.zip', 
 	$date->format('d'), 
@@ -62,12 +65,12 @@ function getBhavCopyFromNse($date){
 		exit();	
 	}else if($httpcode == 200){
 		printf(_pstr("Bhavcopy found at %s"), $bhavcopy_url);
-		storeBhavCopy($bhavcopy_file,$output,$date );
+		storeBhavCopy($bhavcopy_file,$output,$date,$stocksToUpdate);
 	}
 }
 
 // Reading and storing Bhav Copy file in db
-function storeBhavCopy($bhavcopy_file,$output,$date){
+function storeBhavCopy($bhavcopy_file,$output,$date,$stocksToUpdate){
 	
 	$fh = fopen($bhavcopy_file, 'w');
 	fwrite($fh, $output);
@@ -110,11 +113,10 @@ function storeBhavCopy($bhavcopy_file,$output,$date){
 			delete_files($bhavcopy_file, $bhavcopy_csvfile);
 			return;
 		}
-
 		printf(_pstr("Attempting to insert %s records..."), count($bhavcopy_array));
 		$insert = $mysqli->prepare("INSERT INTO daily_candlesticks_fo (symbol, series, open, high, low, close, last, prevclose, tottrdqty, tottrdval, timestamp, totaltrades, isin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		foreach ($bhavcopy_array as $record) {
-			if(($record['SYMBOL']=='SBIN' || $record['SYMBOL']=='HINDALCO')&& $record['SERIES']=='EQ'){
+			if(in_array($record['SYMBOL'], $stocksToUpdate) && $record['SERIES']=='EQ' ){
 				$insert->bind_param("sssssssssssss",
 					$record['SYMBOL'],
 					$record['SERIES'],
@@ -200,4 +202,34 @@ function getHolidays($market){
 	$conn->close();
 	
 	return $dates;
+}
+
+function getStocksToUpdate(){
+	$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+	// Check connection
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+	/* create a prepared statement */
+	$stmt = $conn->prepare("select symbol from watchlist_nifty_500");
+
+    /* bind parameters for markers */
+   // $stmt->bind_param("s", $market);
+
+    /* execute query */
+    $stmt->execute();
+
+    /* bind result variables */
+    $stmt->bind_result($symbol);
+
+	// Loop the results and fetch into an array
+	$symbols = array();
+	while ($stmt->fetch()) {
+		$symbols[] = $symbol;
+	}
+	//print_r($dates);
+	$stmt->close();
+	$conn->close();
+	
+	return $symbols;
 }

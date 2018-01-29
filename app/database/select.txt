@@ -1,0 +1,25 @@
+stockwatchdb
+user
+password
+
+/* Select data from daily_candlesticks_fo_calculations*/
+SELECT symbol,open,high,low,close,change_value,change_percent,volume/volavg50 FROM `daily_candlesticks_fo_calculations` 
+	WHERE volume > 3*volavg50 
+	AND candle_body>avg_candle_body_50 
+	AND candle_height>avg_candle_height_50 
+	ORDER BY `volume/volavg50` DESC
+	
+SELECT DISTINCT DCF.timestamp FROM daily_candlesticks_fo DCF WHERE DCF.timestamp <= CURRENT_DATE AND DCF.timestamp NOT IN 
+(SELECT holidaydate FROM trading_holidays) AND DAYOFWEEK(DCF.timestamp) NOT IN (1,7) ORDER BY DCF.timestamp desc LIMIT 50
+
+/* Get daily_candlesticks_fo_calculations*/
+SELECT T1.date_selected FROM (SELECT (CURRENT_DATE - INTERVAL 100 DAY) + INTERVAL a + b DAY AS date_selected
+FROM
+(SELECT 0 a UNION SELECT 1 a UNION SELECT 2 UNION SELECT 3
+UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7
+UNION SELECT 8 UNION SELECT 9 ) d,
+(SELECT 0 b UNION SELECT 10 UNION SELECT 20
+UNION SELECT 30 UNION SELECT 40 UNION SELECT 50 UNION SELECT 60 UNION SELECT 70 UNION SELECT 80 UNION SELECT 90) m
+WHERE (CURRENT_DATE - INTERVAL 100 DAY) + INTERVAL a + b DAY < CURRENT_DATE
+ORDER BY a + b)T1 WHERE T1.date_selected NOT IN (SELECT HOLIDAYDATE FROM TRADING_HOLIDAYS) AND DAYOFWEEK(T1.date_selected) NOT IN (1,7)
+ORDER BY `T1`.`date_selected`  DESC limit 50
