@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS stockwatchdb;
+USE stockwatchdb;
 CREATE TABLE IF NOT EXISTS `daily_candlesticks_fo` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `symbol` varchar(10) NOT NULL,

@@ -1,3 +1,5 @@
+USE stockwatchdb;
+
 INSERT INTO watchlist_nifty_500(`company_name`,`industry`,`symbol`,series,isin)
 	VALUES('3M India Ltd.','SERVICES','3MINDIA','EQ','INE470A01017'),
 		('8K Miles Soft Services Ltd.','IT','8KMILES','EQ','INE650K01021'),

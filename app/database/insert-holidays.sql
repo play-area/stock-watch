@@ -1,3 +1,5 @@
+USE stockwatchdb;
+
 /*Remove existing holidays*/
 DELETE FROM trading_holidays;
 

@@ -1,3 +1,5 @@
+USE stockwatchdb;
+
 INSERT INTO watchlist_nifty_fo(`symbol`)
 	VALUES
 		('NIITTECH'),
