@@ -38,14 +38,14 @@ function checkDataInTable($noOfDays){
 
 /* Getting Results from database and performing calculations */
 function updateCalculations($calcDate,$noOfDays=50){
-	$errorDates=checkDataInTable($noOfDays);
+	/*$errorDates=checkDataInTable($noOfDays);
 	if(!empty($errorDates)){
 		echo("</br><h3>Please check the following dates in the <b>Daily Candlesticks</b> table:</h3></br>");
 		for($errorDates as $errorDate){
 			echo("<br>"+$errorDate);
 		}
 		return;
-	}
+	}*/
 	$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	// Check connection
 	if ($conn->connect_error) {
