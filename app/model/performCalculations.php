@@ -250,7 +250,7 @@ function getRecordDates($noOfDays){
 		die("Connection failed: " . $conn->connect_error);
 	}
 	/* create a prepared statement */
-	$stmt = $conn->prepare(SELECT DISTINCT timestamp FROM daily_candlesticks_fo ORDER BY timestamp desc limit ?);
+	$stmt = $conn->prepare("SELECT DISTINCT timestamp FROM daily_candlesticks_fo ORDER BY timestamp desc limit ?");
 
     /* bind parameters for markers */
     $stmt->bind_param("s", $noOfDays);
