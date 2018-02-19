@@ -56,6 +56,22 @@ function updateCalculations(){
 	});
 }
 
+function calculateOptions(){
+	//Preventing form submit as it will lead to page refresh
+	event.preventDefault();
+	//Send Ajax Request
+	$.ajax({
+		url: "../app/controllers/OptionsController.php",
+		type: "post",
+		data: "abc",
+		success: function (response) {
+			console.log(response); 
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+		   console.log(textStatus, errorThrown);
+		}
+	});
+}
 
 
 

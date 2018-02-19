@@ -64,3 +64,15 @@ CREATE TABLE IF NOT EXISTS `watchlist_nifty_fo` (
   `series` varchar(2) NOT NULL DEFAULT 'EQ',
    PRIMARY KEY (symbol)
 );
+
+CREATE TABLE IF NOT EXISTS `banknifty_daily` (
+  `recorddate` date NOT NULL,
+  `dayofweek` varchar(10) NOT NULL,
+  `open` decimal(8,2) unsigned NOT NULL,
+  `high` decimal(8,2) unsigned NOT NULL,
+  `low` decimal(8,2) unsigned NOT NULL,
+  `close` decimal(8,2) unsigned NOT NULL,
+  `volume` bigint(20) unsigned NOT NULL,
+  `turnover` bigint(20) unsigned NOT NULL,
+   PRIMARY KEY (recorddate)
+);

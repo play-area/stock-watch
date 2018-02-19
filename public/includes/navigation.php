@@ -14,6 +14,9 @@
 		  <a class="nav-link" href="screeners.php">Screeners</a>
 		</li>
 		<li class="nav-item">
+		  <a class="nav-link" href="options.php">Options</a>
+		</li>
+		<li class="nav-item">
 		  <a class="nav-link" href="contact.php">Contact</a>
 		</li>
 		<li class="nav-item dropdown">
