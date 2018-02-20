@@ -15,31 +15,29 @@ function calculateOptions(){
 	/* create a prepared statement */
 	$stmt = $conn->prepare(BANK_NIFTY_QUERY);
 
-    /* bind parameters for markers */
-    $stmt->bind_param("s", $noOfDays);
-
     /* execute query */
     $stmt->execute();
 
     /* bind result variables */
-    $stmt->bind_result($symbol,$recorddate,$open,$high,$low,$close,$prevclose,$volume);
+    $stmt->bind_result($recorddate,$dayofweek,$open,$high,$low,$close,$volume,$turnover);
 	$i=0;
 	while ($stmt->fetch()) {
-		$queryResults[] = array('symbol' => $symbol,
-			'timestamp' => $timestamp,
+		$queryResults[] = array('recorddate' => $recorddate,
+			'dayofweek' => $dayofweek,
 			'open' => $open,
 			'high' => $high,
 			'low' => $low,
 			'close' => $close,
-			'prevclose' => $prevclose,
-			'volume' => $volume);
-		if(($i+1)%$noOfDays == 0){
-			$symbolSpecificResults[] = array('symbol' => $symbol,
-				'values' => $queryResults);
-			$queryResults = [];	
-		}
-		$i++;	
+			'volume' => $volume,
+			'turnover'=>$turnover);
+		$i++;
 	}
 	$stmt->close();
 	$conn->close();
+	echo("Start Date =");
+	//print_r($queryResults);
+	/* If any holiday in between, then how to check prices between Friday and Thursday or between Monday and Thursday */
+	/* To consider Monday Morning as base price and then calculate the Highest and Lowest Price from there till Thursday close*/
+	/* To consider Monday Morning as base price and consider the average High Price and Average Low Price till Thursday Close*/
 }
+
