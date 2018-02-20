@@ -70,8 +70,9 @@
 				</div>
 			</form>
         </div>
-		<div class="col-lg-8">
+		<div class="col-lg-8 results">
 			<h3>Results</h3>
+			<div></div>
 		</div>
     </div>
     <!-- /.row -->
