@@ -46,7 +46,7 @@
 	<!-- .row -->
     <div class="row">
         <div class="col-lg-4">
-			<h3>Bank Nifty Options</h3>
+			<h3>Options Stats</h3>
 			<form class="options-form" method="post" onsubmit="calculateOptions()">
 				<div class="dropdown form-group">
 					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Symbol
@@ -54,15 +54,17 @@
 					<ul class="dropdown-menu">
 						<li><a href="#">Nifty</a></li>
 						<li><a href="#">Bank Nifty</a></li>
+						<li><a href="#">SBIN</a></li>
+						<li><a href="#">IDEA</a></li>
+						<li><a href="#">ASHOKLEY</a></li>
 					</ul>
 				</div> 
 				<div class="dropdown form-group">
 					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Time Range
 					<span class="caret"></span></button>
 					<ul class="dropdown-menu">
-						<li><a href="#">1 Year</a></li>
-						<li><a href="#">3 Years</a></li>
-						<li><a href="#">5 Years</a></li>
+						<li><a href="#">Weekly Stats</a></li>
+						<li><a href="#">Monthly Stats</a></li>
 					</ul>
 				</div> 
 				<div class="form-group">
@@ -72,7 +74,8 @@
         </div>
 		<div class="col-lg-8 results">
 			<h3>Results</h3>
-			<div></div>
+			<div>
+			</div>
 		</div>
     </div>
     <!-- /.row -->
