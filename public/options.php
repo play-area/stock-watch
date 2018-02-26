@@ -46,35 +46,65 @@
 	<!-- .row -->
     <div class="row">
         <div class="col-lg-4">
-			<h3>Options Stats</h3>
+			<h4>Options Stats</h4>
 			<form class="options-form" method="post" onsubmit="calculateOptions()">
-				<div class="dropdown form-group">
-					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Symbol
-					<span class="caret"></span></button>
-					<ul class="dropdown-menu">
-						<li><a href="#">Nifty</a></li>
-						<li><a href="#">Bank Nifty</a></li>
-						<li><a href="#">SBIN</a></li>
-						<li><a href="#">IDEA</a></li>
-						<li><a href="#">ASHOKLEY</a></li>
-					</ul>
-				</div> 
-				<div class="dropdown form-group">
-					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Time Range
-					<span class="caret"></span></button>
-					<ul class="dropdown-menu">
-						<li><a href="#">Weekly Stats</a></li>
-						<li><a href="#">Monthly Stats</a></li>
-					</ul>
+				<div class="form-group">
+					<label class="control-label"><b>Symbol</b></label>
+					<div class="selectContainer border">
+						<select id="symbol" name="symbol" class="form-control">
+							<option value="BANK NIFTY">BANK NIFTY</option>
+							<option value="NIFTY">NIFTY</option>
+							<option value="NIFTY">SBIN</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label"><b>Time Period</b></label>
+					<div class="selectContainer border">
+						<select id="time-period" name="time-period" class="form-control">
+							<option value="Monthly">Monthly</option>
+							<option value="Weekly">Weekly</option>
+						</select>
+					</div>
 				</div> 
 				<div class="form-group">
-					<button class="btn btn-primary" type="submit">Calculate</button>
+					<label class="control-label"><b>Price Variation</b></label></br>
+					Lower Price Range <=<input type="text" class="form-control" name="lower-price" id="lower-price"></br>
+					Upper Price Range >=<input type="text" class="form-control" name="upper-price" id="upper-price">
+				</div>
+				<div class="form-group" style="display:none">
+					<label class="control-label"><b>Start Day</b></label>
+					<div class="selectContainer border">
+						<select id="start-day" name="start-day" class="form-control">
+							<option value="Monday">Monday</option>
+							<option value="Tuesday">Tuesday</option>
+							<option value="Wednesday">Wednesday</option>
+							<option value="Thursday">Thursday</option>
+							<option value="Friday">Friday</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group" style="display:none">
+					<label class="control-label"><b>End Day</b></label>
+					<div class="selectContainer border">
+						<select id ="end-day" name="end-day" class="form-control">
+							<option value="Monday">Monday</option>
+							<option value="Tuesday">Tuesday</option>
+							<option value="Wednesday">Wednesday</option>
+							<option value="Thursday">Thursday</option>
+							<option value="Friday">Friday</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<input class="btn btn-primary" type="submit" value="Calculate"></button>
 				</div>
 			</form>
         </div>
 		<div class="col-lg-8 results">
-			<h3>Results</h3>
+			<h4>Results</h4>
 			<div>
+				Displaying Results...
 			</div>
 		</div>
     </div>

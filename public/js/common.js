@@ -14,9 +14,21 @@ $(function() {
 		}
 	});
 	
-	$(".close-alert").click(function(e) 
+	$('.close-alert').click(function(e) 
 	{   
 		$(this).parent().hide();
+	});
+	
+	//To show or hide Days dropdown if user selects weekly option
+	$('#time-period').change(function(){
+		var optionValue = $(this).find('option:selected').attr('value');
+		if(optionValue === "Weekly"){
+			$('#start-day').parents('div.form-group').show();
+			$('#end-day').parents('div.form-group').show();
+		}else if(optionValue ==="Monthly"){
+			$('#start-day').parents('div.form-group').hide();
+			$('#end-day').parents('div.form-group').hide();
+		}
 	});
 });
 
@@ -59,14 +71,16 @@ function updateCalculations(){
 function calculateOptions(){
 	//Preventing form submit as it will lead to page refresh
 	event.preventDefault();
+	//Get Form data
+	var formData = $('.options-form').serialize();
+	//console.log("Form Data="+formData);
 	//Send Ajax Request
 	var resultsDiv = $('.results div');
 	$.ajax({
 		url: "../app/controllers/OptionsController.php",
 		type: "post",
-		data: "abc",
+		data: formData,
 		success: function (response) {
-			console.log(response); 
 			resultsDiv.html(response);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {

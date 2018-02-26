@@ -156,3 +156,11 @@
 	}
 }
 /* ############# Index Page Css End ##################*/
+
+/* ############# Options Page Css Start ##################*/
+#lower-price,#upper-price {
+	display:inline;
+	width:auto;
+}
+
+/* ############# Options Page Css End ##################*/
