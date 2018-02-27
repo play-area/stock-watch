@@ -7,6 +7,10 @@ define('DAILY_TIMEFRAME_QUERY', 'SELECT * from ? Order By recorddate ASC');
 /*Function to calculate the Monthly Price Range*/
 function getMonthlyPriceRange($symbol,$lowerPrice=0,$upperPrice=0){
 	$queryResults=getDatabaseRecords($symbol);
+	if(empty($queryResults)){
+		echo("No Result to Display, data not present.");
+		return;
+	}
 	echo("<b>Symbol : </b>".strtoupper($symbol)."&nbsp;&nbsp;");
 	echo("<b>Start Date &nbsp; : &nbsp;</b>".$queryResults[0]['recorddate']);
 	echo("<b>&nbsp;&nbsp;End Date &nbsp; : &nbsp;</b>".$queryResults[count($queryResults)-1]['recorddate']."<br/>");
@@ -75,6 +79,10 @@ function getMonthlyPriceRange($symbol,$lowerPrice=0,$upperPrice=0){
 /*Function to calculate the Weekly Price Range*/
 function getWeeklyPriceRange($symbol,$lowerPrice=0,$upperPrice=0,$startDay,$endDay){
 	$queryResults=getDatabaseRecords($symbol);
+	if(empty($queryResults)){
+		echo("No Result to Display, data not present.");
+		return;
+	}
 	echo("<b>Symbol : </b>".strtoupper($symbol)."&nbsp;&nbsp;");
 	echo("<b>Start Date &nbsp; : &nbsp;</b>".$queryResults[0]['recorddate']);
 	echo("<b>&nbsp;&nbsp;End Date &nbsp; : &nbsp;</b>".$queryResults[count($queryResults)-1]['recorddate']."<br/>");
@@ -153,6 +161,7 @@ function getDatabaseRecords($symbol){
 	
 	$tableName=$symbol."_daily";
 	$dailyTimeframeQuery="SELECT * from ".$tableName." Order By recorddate ASC";
+	$queryResults=null;
 	
 	$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	// Check connection
