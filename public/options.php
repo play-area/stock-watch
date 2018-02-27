@@ -52,9 +52,11 @@
 					<label class="control-label"><b>Symbol</b></label>
 					<div class="selectContainer border">
 						<select id="symbol" name="symbol" class="form-control">
-							<option value="BANK NIFTY">BANK NIFTY</option>
-							<option value="NIFTY">NIFTY</option>
-							<option value="NIFTY">SBIN</option>
+							<option value="banknifty">BANK NIFTY</option>
+							<option value="nifty">NIFTY</option>
+							<option value="usdinr">USD/INR</option>
+							<option value="sbin">SBIN</option>
+							<option value="reliance">RELIANCE</option>
 						</select>
 					</div>
 				</div>

@@ -76,3 +76,51 @@ CREATE TABLE IF NOT EXISTS `banknifty_daily` (
   `turnover` bigint(20) unsigned NOT NULL,
    PRIMARY KEY (recorddate)
 );
+
+CREATE TABLE IF NOT EXISTS `nifty_daily` (
+  `recorddate` date NOT NULL,
+  `dayofweek` varchar(10) NOT NULL,
+  `open` decimal(8,2) unsigned NOT NULL,
+  `high` decimal(8,2) unsigned NOT NULL,
+  `low` decimal(8,2) unsigned NOT NULL,
+  `close` decimal(8,2) unsigned NOT NULL,
+  `volume` bigint(20) unsigned NOT NULL,
+  `turnover` bigint(20) unsigned NOT NULL,
+   PRIMARY KEY (recorddate)
+);
+
+CREATE TABLE IF NOT EXISTS `usdinr_daily` (
+  `recorddate` date NOT NULL,
+  `dayofweek` varchar(10) NOT NULL,
+  `open` decimal(8,3) unsigned NOT NULL,
+  `high` decimal(8,3) unsigned NOT NULL,
+  `low` decimal(8,3) unsigned NOT NULL,
+  `close` decimal(8,3) unsigned NOT NULL,
+  `volume` bigint(20) unsigned NOT NULL,
+  `turnover` bigint(20) unsigned NOT NULL,
+   PRIMARY KEY (recorddate)
+);
+
+CREATE TABLE IF NOT EXISTS `sbin_daily` (
+  `recorddate` date NOT NULL,
+  `dayofweek` varchar(10) NOT NULL,
+  `open` decimal(8,2) unsigned NOT NULL,
+  `high` decimal(8,2) unsigned NOT NULL,
+  `low` decimal(8,2) unsigned NOT NULL,
+  `close` decimal(8,2) unsigned NOT NULL,
+  `volume` bigint(20) unsigned NOT NULL,
+  `turnover` bigint(20) unsigned NOT NULL,
+   PRIMARY KEY (recorddate)
+);
+
+CREATE TABLE IF NOT EXISTS `reliance_daily` (
+  `recorddate` date NOT NULL,
+  `dayofweek` varchar(10) NOT NULL,
+  `open` decimal(8,2) unsigned NOT NULL,
+  `high` decimal(8,2) unsigned NOT NULL,
+  `low` decimal(8,2) unsigned NOT NULL,
+  `close` decimal(8,2) unsigned NOT NULL,
+  `volume` bigint(20) unsigned NOT NULL,
+  `turnover` bigint(20) unsigned NOT NULL,
+   PRIMARY KEY (recorddate)
+);

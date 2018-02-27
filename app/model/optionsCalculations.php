@@ -2,21 +2,80 @@
 
 require "../config/dbcon.php";
 
-define('BANK_NIFTY_QUERY', 'SELECT * from banknifty_daily Order By recorddate ASC');
+define('DAILY_TIMEFRAME_QUERY', 'SELECT * from ? Order By recorddate ASC');
 
 /*Function to calculate the Monthly Price Range*/
-function calculateMonthlyOptionsData($symbol,$lowerPrice=0,$upperPrice=0){
-	$queryResults=getDatabaseRecords();
-	echo("<b>Symbol : </b>".$symbol."&nbsp;&nbsp;");
+function getMonthlyPriceRange($symbol,$lowerPrice=0,$upperPrice=0){
+	$queryResults=getDatabaseRecords($symbol);
+	echo("<b>Symbol : </b>".strtoupper($symbol)."&nbsp;&nbsp;");
 	echo("<b>Start Date &nbsp; : &nbsp;</b>".$queryResults[0]['recorddate']);
 	echo("<b>&nbsp;&nbsp;End Date &nbsp; : &nbsp;</b>".$queryResults[count($queryResults)-1]['recorddate']."<br/>");
 	
+	$startDate=null;
+	$endDate=null;
+	$high=0;
+	$low=0;
+	$open=0;
+	$close=0;
+	$i=0;
+	
+	foreach($queryResults as $result){
+		$todaysDate = new DateTime($result['recorddate'], new DateTimeZone("Asia/Kolkata"));
+		$nextRecord = $queryResults[$i+1<count($queryResults)?$i+1:count($queryResults)-1];
+		$tomorrowsDate = new DateTime($nextRecord['recorddate'], new DateTimeZone("Asia/Kolkata"));
+		
+		//To check start of calculation period of the month
+		if($startDate==null){
+			$startDate=$result['recorddate'];
+			$currentMonth=$todaysDate->format('m');
+			$open=$result['open'];
+			$high=$result['high'];
+			$low=$result['low'];
+		}
+		//To calculate High and Low
+		if($result['high']>$high){
+			$high=$result['high'];
+		}
+		if($result['low']<$low){
+			$low=$result['low'];
+		}
+		//To get end of calculation period for the month.
+		if($currentMonth != $tomorrowsDate->format('m')){
+			$endDate=$result['recorddate'];
+			$close=$result['close'];
+			
+			$monthlyResults[] = array('startDate' => $startDate,
+			'endDate' => $endDate,
+			'open'=>$open,
+			'close'=>$close,
+			'high'=>$high,
+			'low'=>$low);
+			
+			$startDate=null;
+			$endDate=null;
+		}
+		$i++;
+	}
+	//Printing the results
+	$k=1;
+	//echo("</br>Weeks on which <b>BankNifty</b> moved more than a <b>1000 points </b> between $startDay and $endDay</br></br>");
+	echo("<table class='table table-striped'><tr><th>Sl No.</th><th>Start Date</th><th>End Date</th><th>Days</th><th>Month's High</th><th>Month's Low</th><th>Open - Close</th></tr>");
+	foreach($monthlyResults as $monthResult){
+		$maxUp=$monthResult['high']-$monthResult['open'];
+		$maxDown=$monthResult['low']-$monthResult['open'];
+		$priceDiff=abs($monthResult['open']-$monthResult['close']);
+		if($maxUp>=$upperPrice || $maxDown<=$lowerPrice){
+			echo("<tr><td>".$k."</td><td>".$monthResult['startDate']."</td><td>".$monthResult['endDate']."</td><td>".getDayDifference($monthResult['startDate'],$monthResult['endDate'])."</td><td>".$maxUp."</td><td>".$maxDown."</td><td>".$priceDiff."</td></tr>");
+			$k++;
+		}
+	}
+	echo("</table>");	
 }
 
 /*Function to calculate the Weekly Price Range*/
 function getWeeklyPriceRange($symbol,$lowerPrice=0,$upperPrice=0,$startDay,$endDay){
-	$queryResults=getDatabaseRecords();
-	echo("<b>Symbol : </b>".$symbol."&nbsp;&nbsp;");
+	$queryResults=getDatabaseRecords($symbol);
+	echo("<b>Symbol : </b>".strtoupper($symbol)."&nbsp;&nbsp;");
 	echo("<b>Start Date &nbsp; : &nbsp;</b>".$queryResults[0]['recorddate']);
 	echo("<b>&nbsp;&nbsp;End Date &nbsp; : &nbsp;</b>".$queryResults[count($queryResults)-1]['recorddate']."<br/>");
 	
@@ -43,7 +102,6 @@ function getWeeklyPriceRange($symbol,$lowerPrice=0,$upperPrice=0,$startDay,$endD
 				
 		//To check start of calculation period of the week
 		if($dayNo==getDayNumber($startDay) ){
-			//|| $dayNo<getDayNumber($prevRecord['dayofweek'])){	
 			$startDate=$result['recorddate'];
 			$open=$result['open'];
 			$high=$result['high'];
@@ -57,7 +115,6 @@ function getWeeklyPriceRange($symbol,$lowerPrice=0,$upperPrice=0,$startDay,$endD
 			$low=$result['low'];
 		}
 		//To get end of calculation period for the week.
-		//It is failing when Thursday is a holiday as it is not able to find appropriate exit condition.
 		if($startDate !=null && ($dayNo==getDayNumber($endDay) || getDayDifference($startDate,$nextRecord['recorddate']) >$dayCount)){
 			$endDate=$result['recorddate'];
 			$close=$result['close'];
@@ -92,7 +149,10 @@ function getWeeklyPriceRange($symbol,$lowerPrice=0,$upperPrice=0,$startDay,$endD
 }
 
 //Function to Get Database Records
-function getDatabaseRecords(){
+function getDatabaseRecords($symbol){
+	
+	$tableName=$symbol."_daily";
+	$dailyTimeframeQuery="SELECT * from ".$tableName." Order By recorddate ASC";
 	
 	$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 	// Check connection
@@ -100,8 +160,8 @@ function getDatabaseRecords(){
 		die("Connection failed: " . $conn->connect_error);
 	}
 	/* create a prepared statement */
-	$stmt = $conn->prepare(BANK_NIFTY_QUERY);
-
+	$stmt = $conn->prepare($dailyTimeframeQuery);
+	
     /* execute query */
     $stmt->execute();
 
@@ -124,6 +184,15 @@ function getDatabaseRecords(){
 	
 	return $queryResults;
 }
+
+/* Function to get the difference in no. of days between two dates */
+function getDayDifference($stDate,$edDate,$tz = "Asia/Kolkata"){
+	$startDate = new DateTime($stDate, new DateTimeZone($tz));
+	$endDate = new DateTime($edDate, new DateTimeZone($tz));
+	$interval = $startDate->diff($endDate);
+	return (int)$interval->format('%R%a days') + 1;
+}
+
 /* Function to check day of week and return the numeric representation for that day*/
 function getDayNumber($dayOfWeek){
 	switch ($dayOfWeek){
@@ -153,9 +222,3 @@ function getDayNumber($dayOfWeek){
 	}
 }
 
-function getDayDifference($stDate,$edDate,$tz = "Asia/Kolkata"){
-	$startDate = new DateTime($stDate, new DateTimeZone($tz));
-	$endDate = new DateTime($edDate, new DateTimeZone($tz));
-	$interval = $startDate->diff($endDate);
-	return (int)$interval->format('%R%a days') + 1;
-}
