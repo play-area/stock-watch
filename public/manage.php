@@ -14,7 +14,7 @@
     <!-- Page Content -->
     <div class="container">
 	
-	<h2 class="my-4">Manage Database</h2>
+	<h3 class="my-4">Manage Database</h3>
 	
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item">
@@ -47,24 +47,26 @@
     <!-- .row -->
     <div class="row">
         <div class="col-lg-4">
-			<h3>Update Database</h3>
+			<h4>Update Database</h4>
 			<form class="stock-search-form" method="post" action="../app/controllers/updateDatabaseController.php">
-				<div class="form-group">
-					<label for="startdate">Start Date:</label>
-					<input id="startdate" name="startdate" type="date" placeholder="mm/dd/yyyy" required />
-				</div>
-				<div class="form-group">
-					<label for="enddate">End Date:</label>
-					<input id="enddate" name="enddate" type="date" placeholder="mm/dd/yyyy"/>
-				</div>
-				<div class="form-group">
-					<button class="btn btn-primary" type="submit">Update</button>
-				</div>
+				<fieldset>
+					<div class="form-group">
+						<label for="startdate">Start Date:</label>
+						<input id="startdate" name="startdate" type="date" placeholder="mm/dd/yyyy" required />
+					</div>
+					<div class="form-group">
+						<label for="enddate">End Date:</label>
+						<input id="enddate" name="enddate" type="date" placeholder="mm/dd/yyyy"/>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-success" type="submit">Update</button>
+					</div
+				</fieldset>
 			</form>
         </div>
 		
         <div class="col-lg-8">
-			<h3>Database Update Logs</h3>
+			<h4>Database Update Logs</h4>
 			<table class="table table-hover table-striped">
 				<thead>
 					<tr>
@@ -107,35 +109,37 @@
 	<!-- .row -->
     <div class="row">
         <div class="col-lg-4">
-			<h3>Perform Caluclations</h3>
+			<h4>Perform Caluclations</h4>
 			<form class="calculations-form" method="post" onsubmit="updateCalculations()">
-				<div class="form-group">
-					<label for="calculationdate">Date</label>
-					<input id="calculationdate" name="calculationdate" type="date" value="2018-01-02" required />
-				</div>
-				<div class="form-group">
-					<input type="checkbox" class="calculation-checkbox" id="avgcandle50" checked />
-					<label for="defaultCheck1">Avg Candle 50</label>
-				</div>
-				<div class="form-group">
-					<input type="checkbox" class="calculation-checkbox" id="avgvolume50" checked />
-					<label for="defaultCheck1">Avg Volume 50</label>
-				</div>
-				<div class="form-group">
-					<input type="checkbox" class="calculation-checkbox" id="ma20" checked />
-					<label for="defaultCheck1">MA 20</label>
-				</div>
-				<div class="form-group">
-					<input type="checkbox" class="calculation-checkbox" id="ma50" checked />
-					<label for="defaultCheck1">MA 50</label>
-				</div>
-				<div class="form-group">
-					<button class="btn btn-primary" type="submit">Update</button>
-				</div>
+				<fieldset>
+					<div class="form-group">
+						<label for="calculationdate">Date</label>
+						<input id="calculationdate" name="calculationdate" type="date" value="2018-01-02" required />
+					</div>
+					<div class="form-group">
+						<input type="checkbox" class="calculation-checkbox" id="avgcandle50" checked />
+						<label for="defaultCheck1">Avg Candle 50</label>
+					</div>
+					<div class="form-group">
+						<input type="checkbox" class="calculation-checkbox" id="avgvolume50" checked />
+						<label for="defaultCheck1">Avg Volume 50</label>
+					</div>
+					<div class="form-group">
+						<input type="checkbox" class="calculation-checkbox" id="ma20" checked />
+						<label for="defaultCheck1">MA 20</label>
+					</div>
+					<div class="form-group">
+						<input type="checkbox" class="calculation-checkbox" id="ma50" checked />
+						<label for="defaultCheck1">MA 50</label>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-success" type="submit">Update</button>
+					</div>
+				</fieldset>
 			</form>
         </div>
 		<div class="col-lg-8">
-			<h3>Calculation Logs</h3>
+			<h4>Calculation Logs</h4>
 			<table class="table table-hover table-striped">
 				<thead>
 					<tr>

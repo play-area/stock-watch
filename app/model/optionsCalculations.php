@@ -62,7 +62,7 @@ function getMonthlyPriceRange($symbol,$lowerPrice=0,$upperPrice=0){
 	}
 	//Printing the results
 	$k=1;
-	//echo("</br>Weeks on which <b>BankNifty</b> moved more than a <b>1000 points </b> between $startDay and $endDay</br></br>");
+	echo("</br>Months on which <b>".strtoupper($symbol)."</b> traded below<b>$lowerPrice</b> or traded above <b>$upperPrice</b></br></br>");
 	echo("<table class='table table-striped'><tr><th>Sl No.</th><th>Start Date</th><th>End Date</th><th>Days</th><th>Month's High</th><th>Month's Low</th><th>Open - Close</th></tr>");
 	foreach($monthlyResults as $monthResult){
 		$maxUp=$monthResult['high']-$monthResult['open'];
@@ -142,7 +142,7 @@ function getWeeklyPriceRange($symbol,$lowerPrice=0,$upperPrice=0,$startDay,$endD
 	
 	//Printing the results
 	$k=1;
-	echo("</br>Weeks on which <b>BankNifty</b> moved more than a <b>1000 points </b> between $startDay and $endDay</br></br>");
+	echo("</br>Weeks on which <b>".strtoupper($symbol)."</b> traded below<b>$lowerPrice</b> or traded above <b>$upperPrice</b> between $startDay and $endDay</br></br>");
 	echo("<table class='table table-striped'><tr><th>Sl No.</th><th>Start Date</th><th>End Date</th><th>Days</th><th>Week's High</th><th>Week's Low</th><th>Open - Close</th></tr>");
 	foreach($weeklyResults as $weekResult){
 		$maxUp=$weekResult['high']-$weekResult['open'];

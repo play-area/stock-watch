@@ -1,166 +1,243 @@
-/* ############# Index Page Css Start ##################*/
-/*
-	Color Codes:
-		#0C383B
-		#789F8A
-		#E2D8A3
-		#E1B753
-		#E1694E
-*/
-.bg-dark {
-    background-color: #0C383B!important;
-}
-.navbar-dark .navbar-nav .nav-link {
-    color: #f8f9fa;
-}
-.blank-row-1{
-	margin:1% 0;
-}
-/* Buttons -- START */
-.btn-primary {
-  color: #fff;
-  background-color: #E1694E;
-  border-color: #AF523D;
-}
-
-.btn-primary:hover {
-  color: #fff;
-  background-color: #FF8C72;
-  border-color: #E1694E;
-  cursor:pointer;
-}
-
-.btn-primary:focus, .btn-primary.focus {
-  box-shadow: 0 0 0 0.2rem #FF8C72;
-}
-
-.btn-outline-primary:not([disabled]):not(.disabled):active, .btn-outline-primary:not([disabled]):not(.disabled).active,
-.show > .btn-outline-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #FF8C72;
-  border-color: #E1694E;
-  box-shadow: 0 0 0 0.2rem #FF8C72;
-}
-
-.btn-success {
-  color: #fff;
-  background-color: #49a75f;
-  border-color: #28a745;
-}
-
-.btn-success:hover {
-  color: #fff;
-  background-color: #218838;
-  border-color: #1e7e34;
-  cursor:pointer;
-}
-
-.btn-success:focus, .btn-success.focus {
-  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
-}
-/* Buttons -- END */	
-
-/* Forms -- START */
-.input-group .glyphicon-search{
-		padding: 0 0 0 10px;
+/* ############# Common CSS for all pages Start ##################*/
+	body {
+		margin: 0;
+		font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+		font-size: 15px;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #212529;
+		text-align: left;
+		background-color: #fff;
 	}
-/* Forms -- END */
-
-/* Tables -- START */
-.table td .btn-success, .table td .btn-danger, .table td .btn-info {
-		cursor:pointer;
-	}
-.table td .btn-info {
-		padding:6px 9px;
-		margin:	0 0 0 5%;
-		cursor:pointer;
-	}
-/* Tables -- END */	
-
-.alerts-row{
-	position: fixed;
-	top: 45%;
-    left: 35%;
-	z-index:9999;
-}
-
-.alerts-row .alert{
-	display:none;
-	position: inherit;
-}
-.alert-success{
-	color: #fff;
-	background-color: #49a75f;
-	border-color: #28a745;
-}
-.alert-danger{
-	color: #fff;
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-.alerts-row .close-alert {
-	position: absolute;
-	right: 10px;
-	top:0px;
-	font-size: 20px;
-}
-
-/* Media Querries -- START */	
-@media (max-width: 600px){
+	
 	h1, .h1 {
-	  font-size: 2rem;
+	  font-size: 30px;
 	}
 
 	h2, .h2 {
-	  font-size: 1.5rem;
+	  font-size: 26px;
 	}
 
 	h3, .h3 {
-	  font-size: 1.25rem;
+	  font-size: 22px;
 	}
 
 	h4, .h4 {
-	  font-size: 1rem;
+	  font-size: 18px;
 	}
 
 	h5, .h5 {
-	  font-size: 0.75rem;
+	  font-size: 14px;
 	}
 
 	h6, .h6 {
-	  font-size: 0.25rem;
+	  font-size: 10px;
+	}
+
+	fieldset{
+		border: 1px solid #f3eded;
+		border-radius: 5px;
+		padding: 15px;
+		margin:5px 5px 10px 0px;
 	}
 	
-	.stock-search-form .btn-primary , .stock-search-form .btn-success{
-		padding: 3px 6px;
-		font-size: 12px;
-		margin: 2% 0;
+	.bg-dark {
+		background-color: #0C383B!important;
 	}
-	input.form-control,.input-group .glyphicon-search{
-		padding: 3px 6px;
-		font-size: 12px;
+	.navbar-dark .navbar-nav .nav-link {
+		color: #f8f9fa;
 	}
-	.table td, .table th {
-		padding: .75rem 0;
-		vertical-align: top;
-		border-top: 1px solid #e9ecef;
-		font-size: 12px;
+	.blank-row-1{
+		margin:1% 0;
 	}
-	.table td .btn-success, .table td .btn-danger, .table td .btn-info {
-		padding: 3px 6px;
-		font-size: 12px;
+	.row-separator{
+		border: 1px solid #f3eded;
+		margin:2% 0;
 	}
-	.alert-success,.alert-danger {
-		left: 30%;
-		font-size: 12px;
+
+	/* Buttons CSS -- START */
+		.btn {
+			padding:4px 8px;
+		}
+
+		.btn-primary {
+			color: #fff;
+			background-color: #E1694E;
+			border-color: #AF523D;
+		}
+
+		.btn-primary:hover {
+			color: #fff;
+			background-color: #FF8C72;
+			border-color: #E1694E;
+			cursor:pointer;
+		}
+
+		.btn-primary:focus, .btn-primary.focus {
+			box-shadow: 0 0 0 0.2rem #FF8C72;
+		}
+
+		.btn-outline-primary:not([disabled]):not(.disabled):active, .btn-outline-primary:not([disabled]):not(.disabled).active,
+		.show > .btn-outline-primary.dropdown-toggle {
+			color: #fff;
+			background-color: #FF8C72;
+			border-color: #E1694E;
+			box-shadow: 0 0 0 0.2rem #FF8C72;
+		}
+
+		.btn-success {
+			color: #fff;
+			background-color: #49a75f;
+			border-color: #28a745;
+		}
+
+		.btn-success:hover {
+			color: #fff;
+			background-color: #218838;
+			border-color: #1e7e34;
+			cursor:pointer;
+		}
+
+		.btn-success:focus, .btn-success.focus {
+			box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+		}
+	/* Buttons CSS -- END */
+	
+	/* Forms CSS -- START */
+	.input-group .glyphicon-search{
+		padding: 0 0 0 10px;
 	}
-}
+	/* Forms CSS -- END */
+	
+	/*CSS for Alerts START*/
+		.alerts-row{
+			position: fixed;
+			top: 45%;
+			left: 35%;
+			z-index:9999;
+		}
+
+		.alerts-row .alert{
+			display:none;
+			position: inherit;
+		}
+		.alert-success{
+			color: #fff;
+			background-color: #49a75f;
+			border-color: #28a745;
+		}
+		.alert-danger{
+			color: #fff;
+			background-color: #dc3545;
+			border-color: #dc3545;
+		}
+		.alerts-row .close-alert {
+			position: absolute;
+			right: 10px;
+			top:0px;
+			font-size: 20px;
+		}
+	/*CSS for Alerts END*/
+	
+	/* Tables CSS -- START */
+		.table td, .table th {
+			padding: 12px 10px;
+		}
+		.table td .btn-success, .table td .btn-danger, .table td .btn-info {
+			cursor:pointer;
+		}
+		.table td .btn-info {
+			padding:6px 9px;
+			margin:	0 0 0 5%;
+			cursor:pointer;
+		}
+	/* Tables CSS -- END */
+	
+	/* Media Querries -- START */	
+		@media (max-width: 600px){
+			h1, .h1 {
+			  font-size: 26px;
+			}
+
+			h2, .h2 {
+			  font-size: 22px;
+			}
+
+			h3, .h3 {
+			  font-size: 18px;
+			}
+
+			h4, .h4 {
+			  font-size: 14px;
+			}
+
+			h5, .h5 {
+			  font-size: 12px;
+			}
+
+			h6, .h6 {
+			  font-size: 10px;
+			}
+			
+			.btn-primary , .btn-success,.btn-info,.btn-danger{
+				padding: 3px 6px;
+				font-size: 12px;
+				margin: 2% 0;
+			}
+			input.form-control,.input-group .glyphicon-search{
+				padding: 3px 6px;
+				font-size: 12px;
+			}
+			.table td, .table th {
+				padding: 12px 10px;
+				vertical-align: top;
+				border-top: 1px solid #e9ecef;
+				font-size: 12px;
+			}
+			.table td .btn-success, .table td .btn-danger, .table td .btn-info {
+				padding: 3px 6px;
+				font-size: 12px;
+			}
+			.alert-success,.alert-danger {
+				left: 30%;
+				font-size: 12px;
+			}
+		}
+	/* Media Querries -- END */
+
+/* ############# Common CSS for all pages End ##################*/
+
+
+/* ############# Index Page Css Start ##################*/
+
+
+
+
 /* ############# Index Page Css End ##################*/
 
-/* ############# Options Page Css Start ##################*/
-#lower-price,#upper-price {
-	display:inline;
-	width:auto;
-}
+/* ############# Manage Page Css Start ##################*/
 
+
+
+
+/* ############# Manage Page Css End ##################*/
+
+
+/* ############# Screener Page Css Start ##################*/
+
+
+
+
+/* ############# Screener Page Css End ##################*/
+
+
+/* ############# Options Page Css Start ##################*/
+	#lower-price,#upper-price {
+		display:inline;
+		width:auto;
+	}
+	.results div{
+		overflow-y: auto;
+		height: 395px;
+	}
 /* ############# Options Page Css End ##################*/

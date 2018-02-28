@@ -15,9 +15,7 @@
     <div class="container">
 
       <!-- Page Heading/Breadcrumbs -->
-      <h1 class="mt-4 mb-3">Screeners
-        <small>Subheading</small>
-      </h1>
+      <h3 class="mt-4 mb-3">Screeners</h3>
 
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -44,7 +42,7 @@
 				</ul>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">Search</a>
+              <a href="#" class="btn btn-success">Search</a>
             </div>
           </div>
         </div>
@@ -61,7 +59,7 @@
 				</ul>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">Search</a>
+              <a href="#" class="btn btn-success">Search</a>
             </div>
           </div>
         </div>
