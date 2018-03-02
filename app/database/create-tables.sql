@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `watchlist_nifty_fo` (
    PRIMARY KEY (symbol)
 );
 
-CREATE TABLE IF NOT EXISTS `banknifty_daily` (
+CREATE TABLE IF NOT EXISTS `daily_banknifty` (
   `recorddate` date NOT NULL,
   `dayofweek` varchar(10) NOT NULL,
   `open` decimal(8,2) unsigned NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `banknifty_daily` (
    PRIMARY KEY (recorddate)
 );
 
-CREATE TABLE IF NOT EXISTS `nifty_daily` (
+CREATE TABLE IF NOT EXISTS `daily_nifty` (
   `recorddate` date NOT NULL,
   `dayofweek` varchar(10) NOT NULL,
   `open` decimal(8,2) unsigned NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `nifty_daily` (
    PRIMARY KEY (recorddate)
 );
 
-CREATE TABLE IF NOT EXISTS `usdinr_daily` (
+CREATE TABLE IF NOT EXISTS `daily_usdinr` (
   `recorddate` date NOT NULL,
   `dayofweek` varchar(10) NOT NULL,
   `open` decimal(8,3) unsigned NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `usdinr_daily` (
    PRIMARY KEY (recorddate)
 );
 
-CREATE TABLE IF NOT EXISTS `sbin_daily` (
+CREATE TABLE IF NOT EXISTS `daily_sbin` (
   `recorddate` date NOT NULL,
   `dayofweek` varchar(10) NOT NULL,
   `open` decimal(8,2) unsigned NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `sbin_daily` (
    PRIMARY KEY (recorddate)
 );
 
-CREATE TABLE IF NOT EXISTS `reliance_daily` (
+CREATE TABLE IF NOT EXISTS `daily_reliance` (
   `recorddate` date NOT NULL,
   `dayofweek` varchar(10) NOT NULL,
   `open` decimal(8,2) unsigned NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `reliance_daily` (
    PRIMARY KEY (recorddate)
 );
 
-CREATE TABLE IF NOT EXISTS `ashokley_daily` (
+CREATE TABLE IF NOT EXISTS `daily_ashokley` (
   `recorddate` date NOT NULL,
   `dayofweek` varchar(10) NOT NULL,
   `open` decimal(8,2) unsigned NOT NULL,
