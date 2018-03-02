@@ -4,6 +4,23 @@ require "../config/dbcon.php";
 
 define('DAILY_TIMEFRAME_QUERY', 'SELECT * from ? Order By recorddate ASC');
 
+function getStrikes($symbol,$spotPrice,$dailyReturn,$dailyVolatility,$daysToExp){
+	$upperOneSD=	$spotPrice*(1+ ($dailyReturn*$daysToExp/100) + ($dailyReturn*sqrt($daysToExp)/100));
+	$lowerOneSD=	$spotPrice*(1+($dailyReturn*$daysToExp/100) - ($dailyReturn*sqrt($daysToExp)/100));
+	
+	$upperTwoSD=	$spotPrice*(1+($dailyReturn*$daysToExp/100) + (2*$dailyReturn*sqrt($daysToExp)/100));
+	$lowerTwoSD=	$spotPrice*(1+($dailyReturn*$daysToExp/100) - (2*$dailyReturn*sqrt($daysToExp)/100));
+	
+	$upperThreeSD=	$spotPrice*(1+($dailyReturn*$daysToExp/100) + (3*$dailyReturn*sqrt($daysToExp)/100));
+	$lowerThreeSD=	$spotPrice*(1+($dailyReturn*$daysToExp/100) - (3*$dailyReturn*sqrt($daysToExp)/100));
+	
+	echo("<table class='table table-striped'><tr><th>Standard Deviation</th><th>Upper Strike Price</th><th>Lower Strike Price</th></tr>");
+	echo("<tr><td> First Standard Deviation</td><td>$upperOneSD</td><td>$lowerOneSD</td></tr>");
+	echo("<tr><td> Second Standard Deviation</td><td>$upperTwoSD</td><td>$lowerTwoSD</td></tr>");
+	echo("<tr><td> Third Standard Deviation</td><td>$upperThreeSD</td><td>$lowerThreeSD</td></tr>");
+	echo("</table>");
+}
+
 /*Function to calculate the Monthly Price Range*/
 function getMonthlyPriceRange($symbol,$lowerPrice=0,$upperPrice=0){
 	$queryResults=getDatabaseRecords($symbol);
@@ -44,7 +61,7 @@ function getMonthlyPriceRange($symbol,$lowerPrice=0,$upperPrice=0){
 			$low=$result['low'];
 		}
 		//To get end of calculation period for the month.
-		if($currentMonth != $tomorrowsDate->format('m')){
+		if($currentMonth != $tomorrowsDate->format('m') || count($queryResults)==$i+1){
 			$endDate=$result['recorddate'];
 			$close=$result['close'];
 			

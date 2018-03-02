@@ -51,15 +51,15 @@
 			<form class="stock-search-form" method="post" action="../app/controllers/updateDatabaseController.php">
 				<fieldset>
 					<div class="form-group">
-						<label for="startdate">Start Date:</label>
+						<label for="startdate" class="font-weight-600">Start Date:</label>
 						<input id="startdate" name="startdate" type="date" placeholder="mm/dd/yyyy" required />
 					</div>
 					<div class="form-group">
-						<label for="enddate">End Date:</label>
+						<label for="enddate" class="font-weight-600">End Date:</label>
 						<input id="enddate" name="enddate" type="date" placeholder="mm/dd/yyyy"/>
 					</div>
 					<div class="form-group">
-						<button class="btn btn-success" type="submit">Update</button>
+						<input class="btn btn-success" type="submit"/>
 					</div
 				</fieldset>
 			</form>
@@ -113,24 +113,24 @@
 			<form class="calculations-form" method="post" onsubmit="updateCalculations()">
 				<fieldset>
 					<div class="form-group">
-						<label for="calculationdate">Date</label>
+						<label for="calculationdate" class="font-weight-600">Date</label>
 						<input id="calculationdate" name="calculationdate" type="date" value="2018-01-02" required />
 					</div>
 					<div class="form-group">
 						<input type="checkbox" class="calculation-checkbox" id="avgcandle50" checked />
-						<label for="defaultCheck1">Avg Candle 50</label>
+						<label for="defaultCheck1" class="font-weight-600">Avg Candle 50</label>
 					</div>
 					<div class="form-group">
 						<input type="checkbox" class="calculation-checkbox" id="avgvolume50" checked />
-						<label for="defaultCheck1">Avg Volume 50</label>
+						<label for="defaultCheck1" class="font-weight-600">Avg Volume 50</label>
 					</div>
 					<div class="form-group">
 						<input type="checkbox" class="calculation-checkbox" id="ma20" checked />
-						<label for="defaultCheck1">MA 20</label>
+						<label for="defaultCheck1" class="font-weight-600">MA 20</label>
 					</div>
 					<div class="form-group">
 						<input type="checkbox" class="calculation-checkbox" id="ma50" checked />
-						<label for="defaultCheck1">MA 50</label>
+						<label for="defaultCheck1" class="font-weight-600">MA 50</label>
 					</div>
 					<div class="form-group">
 						<button class="btn btn-success" type="submit">Update</button>

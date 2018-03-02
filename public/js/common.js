@@ -27,7 +27,7 @@ $(function() {
 			$('#end-day').parents('div.form-group').show();
 		}else if(optionValue ==="Monthly"){
 			$('#start-day').parents('div.form-group').hide();
-			$('#end-day').parents('div.form-group').hide();
+			$('#end-day').parents('div.form-group').show();
 		}
 	});
 });
@@ -68,7 +68,7 @@ function updateCalculations(){
 	});
 }
 
-function calculateOptions(){
+function calculateStockStats(){
 	//Preventing form submit as it will lead to page refresh
 	event.preventDefault();
 	//Get Form data
@@ -76,6 +76,27 @@ function calculateOptions(){
 	//console.log("Form Data="+formData);
 	//Send Ajax Request
 	var resultsDiv = $('.results div');
+	$.ajax({
+		url: "../app/controllers/OptionsController.php",
+		type: "post",
+		data: formData,
+		success: function (response) {
+			resultsDiv.html(response);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+		   console.log(textStatus, errorThrown);
+		}
+	});
+}
+
+function calculateStrikes(){
+	//Preventing form submit as it will lead to page refresh
+	event.preventDefault();
+	//Get Form data
+	var formData = $('.strikes-form').serialize();
+	//console.log("Form Data="+formData);
+	//Send Ajax Request
+	var resultsDiv = $('.strike-results div');
 	$.ajax({
 		url: "../app/controllers/OptionsController.php",
 		type: "post",

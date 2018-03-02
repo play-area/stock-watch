@@ -51,9 +51,19 @@
 		margin:1% 0;
 	}
 	.row-separator{
-		border: 1px solid #f3eded;
-		margin:2% 0;
+		border: 0.5px solid #f3eded;
+		margin: 2% 0;
 	}
+	.font-weight-200{
+		font-weight: 200;
+	}
+	.font-weight-400{
+		font-weight: 400;
+	}
+	.font-weight-600{
+		font-weight: 600;
+	}
+	
 
 	/* Buttons CSS -- START */
 		.btn {
@@ -155,6 +165,9 @@
 	
 	/* Media Querries -- START */	
 		@media (max-width: 600px){
+			body {
+				font-size: 13px;
+			}
 			h1, .h1 {
 			  font-size: 26px;
 			}
@@ -185,6 +198,11 @@
 				margin: 2% 0;
 			}
 			input.form-control,.input-group .glyphicon-search{
+				padding: 3px 6px;
+				font-size: 12px;
+			}
+			select.form-control:not([size]):not([multiple]){
+				height: auto;
 				padding: 3px 6px;
 				font-size: 12px;
 			}
@@ -237,6 +255,9 @@
 		width:auto;
 	}
 	.results div{
+		overflow-y: auto;
+		height: 395px;
+	}.strike-results div{
 		overflow-y: auto;
 		height: 395px;
 	}
