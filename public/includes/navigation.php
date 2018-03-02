@@ -16,20 +16,17 @@
 		<li class="nav-item">
 		  <a class="nav-link" href="options.php">Options</a>
 		</li>
-		<li class="nav-item">
-		  <a class="nav-link" href="contact.php">Contact</a>
-		</li>
 		<li class="nav-item dropdown">
 		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Portfolio
+			Administer
 		  </a>
 		  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-			<a class="dropdown-item" href="portfolio-1-col.php">1 Column Portfolio</a>
-			<a class="dropdown-item" href="portfolio-2-col.php">2 Column Portfolio</a>
-			<a class="dropdown-item" href="portfolio-3-col.php">3 Column Portfolio</a>
-			<a class="dropdown-item" href="portfolio-4-col.php">4 Column Portfolio</a>
-			<a class="dropdown-item" href="portfolio-item.php">Single Portfolio Item</a>
+			<a class="dropdown-item" href="admin_database_update.php">Update Database</a>
+			<a class="dropdown-item" href="admin_database_logs.php">Database Logs</a>
 		  </div>
+		</li>
+		<li class="nav-item">
+		  <a class="nav-link" href="contact.php">Contact</a>
 		</li>
 		<li class="nav-item dropdown">
 		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
