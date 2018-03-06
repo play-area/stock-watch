@@ -67,12 +67,18 @@
 						<input type="text" class="form-control" name="spot-price" id="spot-price">
 					</div>
 					<div class="form-group">
-						<label class="control-label font-weight-600">Daily Return(%)</label>
-						<input type="text" class="form-control" name="daily-return" id="daily-return">
+						<label class="control-label font-weight-600">Daily Return(%)</label><br/>
+						<input type="radio" name="daily-return" value="6" onclick="showHideManualEntry(this)"/> 6 months
+						<input type="radio" name="daily-return" value="12" checked onclick="showHideManualEntry(this)"/>12 months
+						<input type="radio" name="daily-return" value="manual" onclick="showHideManualEntry(this)"/>Manual Entry<br/> 
+						<input type="text" class="form-control" name="daily-return-manual" id="daily-return-manual" style="display:none"/>
 					</div>
 					<div class="form-group">
-						<label class="control-label font-weight-600">Daily Volatility(%)</label>
-						<input type="text" class="form-control" name="daily-volatility" id="daily-volatility">
+						<label class="control-label font-weight-600">Daily Volatility(%)</label><br/>
+						<input type="radio" name="daily-volatility" value="6" checked onclick="showHideManualEntry(this)"/> 6 months
+						<input type="radio" name="daily-volatility" value="12" onclick="showHideManualEntry(this)"/>12 months
+						<input type="radio" name="daily-volatility" value="manual" onclick="showHideManualEntry(this)"/>Manual Entry<br/> 
+						<input type="text" class="form-control" name="daily-volatility-manual" id="daily-volatility-manual" style="display:none"/>
 					</div>
 					<div class="form-group">
 						<label class="control-label font-weight-600">Days to Expiry<span class="font-weight-400">(Working Days)</span></label>

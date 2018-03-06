@@ -68,6 +68,8 @@ function updateCalculations(){
 	});
 }
 
+/* -----------------------------JS for Options Page --------------------- START----------- -------------*/
+
 function calculateStockStats(){
 	//Preventing form submit as it will lead to page refresh
 	event.preventDefault();
@@ -110,5 +112,16 @@ function calculateStrikes(){
 	});
 }
 
+function showHideManualEntry(currentElement){
+	var currentSelection = $(currentElement).val();
+	var elementToShowHide	= '#'+$(currentElement).attr('name')+'-manual';
+	console.log(elementToShowHide);
+	if(currentSelection==='manual'){
+		$(elementToShowHide).show();
+	}else{
+		$(elementToShowHide).hide();
+	}
+}
 
+/* -----------------------------JS for Options Page --------------------- END----------- -------------*/
 

@@ -4,7 +4,16 @@ require "../config/dbcon.php";
 
 define('DAILY_TIMEFRAME_QUERY', 'SELECT * from ? Order By recorddate ASC');
 
-function getStrikes($symbol,$spotPrice,$dailyReturn,$dailyVolatility,$daysToExp){
+//Function to get the Strikes at various Standard Deviations
+function getStrikes($symbol,$spotPrice,$dailyReturnDuration,$dailyReturn,$dailyVolatilityDuration,$dailyVolatility,$daysToExp){
+	if($dailyReturnDuration!="manual"){
+		$dailyReturn = getDailyReturnVolatility($symbol,$dailyReturnDuration,"return");
+		echo("<span class='font-weight-600'>Daily Return(%) = </span>$dailyReturn <br/>");
+	}
+	if($dailyVolatilityDuration!="manual"){
+		$dailyVolatility = getDailyReturnVolatility($symbol,$dailyVolatilityDuration,"volatility");
+		echo("<span class='font-weight-600'>Daily Volatility(%)= </span>$dailyVolatility <br/><br/>");
+	}
 	
 	$upperOneSD=	$spotPrice*(1+ ($dailyReturn*$daysToExp/100) + ($dailyVolatility*sqrt($daysToExp)/100));
 	$lowerOneSD=	$spotPrice*(1+($dailyReturn*$daysToExp/100) - ($dailyVolatility*sqrt($daysToExp)/100));
@@ -16,10 +25,73 @@ function getStrikes($symbol,$spotPrice,$dailyReturn,$dailyVolatility,$daysToExp)
 	$lowerThreeSD=	$spotPrice*(1+($dailyReturn*$daysToExp/100) - (3*$dailyVolatility*sqrt($daysToExp)/100));
 	
 	echo("<table class='table table-striped'><tr><th>Standard Deviation</th><th>Upper Strike Price</th><th>Lower Strike Price</th></tr>");
-	echo("<tr><td> First Standard Deviation</td><td>$upperOneSD</td><td>$lowerOneSD</td></tr>");
-	echo("<tr><td> Second Standard Deviation</td><td>$upperTwoSD</td><td>$lowerTwoSD</td></tr>");
-	echo("<tr><td> Third Standard Deviation</td><td>$upperThreeSD</td><td>$lowerThreeSD</td></tr>");
+	echo("<tr><td> First SD (68% probability)</td><td>$upperOneSD</td><td>$lowerOneSD</td></tr>");
+	echo("<tr><td> Second SD (95% probability)</td><td>$upperTwoSD</td><td>$lowerTwoSD</td></tr>");
+	echo("<tr><td> Third SD (99.7% probability)</td><td>$upperThreeSD</td><td>$lowerThreeSD</td></tr>");
 	echo("</table>");
+}
+
+//Function to get the Daily Returns in percentage for a particular symbol
+//Assumption being that there are 250 trading days in a year(12 months). So 6 months is approximately equal to 125 days
+function getDailyReturnVolatility($symbol,$dailyReturnDuration,$toCalculate){
+	$queryResults=getDatabaseRecords($symbol);
+	$i=0;
+	$dailyReturnsPercentage[]=array();
+	if(empty($queryResults)){
+		echo("No Result to Display, data not present.");
+		return;
+	}
+	if($dailyReturnDuration==="6"){
+		$n=125;
+	}
+	if($dailyReturnDuration==="12"){
+		$n=250;
+	}
+	//Getting the last n records from the array.
+	$resultsArray = array_slice($queryResults, -$n);
+
+	foreach($resultsArray as $result){
+		$nextRecord = $resultsArray[$i+1<count($resultsArray)?$i+1:count($resultsArray)-1];
+		if($i+1<count($resultsArray)){
+			$dailyReturnsPercentage[$i++]=($nextRecord['close']-$result['close'])*100/$result['close'];
+		}
+	}
+	if($toCalculate==="return"){
+		$averageDailyReturn = array_sum($dailyReturnsPercentage)/count($dailyReturnsPercentage);
+		return $averageDailyReturn;
+	}else if($toCalculate==="volatility"){
+		$averageDailyVolatility = getStandardDeviation($dailyReturnsPercentage);
+		return $averageDailyVolatility;
+	}
+}
+
+//Function to calculate Standard Deviation
+function getStandardDeviation($a)
+{
+  //variable and initializations
+  $the_standard_deviation = 0.0;
+  $the_variance = 0.0;
+  $the_mean = 0.0;
+  $the_array_sum = array_sum($a); //sum the elements
+  $number_elements = count($a); //count the number of elements
+
+  //calculate the mean
+  $the_mean = $the_array_sum / $number_elements;
+
+  //calculate the variance
+  for ($i = 0; $i < $number_elements; $i++)
+  {
+    //sum the array
+    $the_variance = $the_variance + ($a[$i] - $the_mean) * ($a[$i] - $the_mean);
+  }
+
+  $the_variance = $the_variance / $number_elements;
+
+  //calculate the standard deviation
+  $the_standard_deviation = pow( $the_variance, 0.5);
+
+  //return the variance
+  return $the_standard_deviation;
 }
 
 /*Function to calculate the Monthly Price Range*/
