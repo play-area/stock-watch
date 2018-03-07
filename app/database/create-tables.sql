@@ -136,3 +136,17 @@ CREATE TABLE IF NOT EXISTS `daily_ashokley` (
   `turnover` bigint(20) unsigned NOT NULL,
    PRIMARY KEY (recorddate)
 );
+
+/* SQL for new database design */
+/* Creating Data Tables ******************************** START ********************************/
+CREATE TABLE IF NOT EXISTS `data_quandl_daily_liquid_options`(
+	`recorddate` date NOT NULL,
+	`symbol` varchar(256) NOT NULL,
+	`open` decimal(8,4) unsigned NOT NULL,
+	`high` decimal(8,4) unsigned NOT NULL,
+	`low` decimal(8,4) unsigned NOT NULL,
+	`close` decimal(8,4) unsigned NOT NULL,
+	`volume` bigint(20) unsigned NOT NULL,
+	PRIMARY KEY (recorddate,symbol)
+);
+/* Creating Data Tables ******************************** END ********************************/

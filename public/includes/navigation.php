@@ -18,10 +18,10 @@
 		</li>
 		<li class="nav-item dropdown">
 		  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Administer
+			Admin
 		  </a>
 		  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-			<a class="dropdown-item" href="admin_database_update.php">Update Database</a>
+			<a class="dropdown-item" href="admin_manage_database.php">Manage Database</a>
 			<a class="dropdown-item" href="admin_database_logs.php">Database Logs</a>
 		  </div>
 		</li>

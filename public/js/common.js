@@ -115,7 +115,6 @@ function calculateStrikes(){
 function showHideManualEntry(currentElement){
 	var currentSelection = $(currentElement).val();
 	var elementToShowHide	= '#'+$(currentElement).attr('name')+'-manual';
-	console.log(elementToShowHide);
 	if(currentSelection==='manual'){
 		$(elementToShowHide).show();
 	}else{
@@ -125,3 +124,42 @@ function showHideManualEntry(currentElement){
 
 /* -----------------------------JS for Options Page --------------------- END----------- -------------*/
 
+/* -----------------------------JS for Admin Pages------------------------START-----------------------*/
+
+function showHideUpdateDatabaseDates(currentElement){
+	var currentSelection = $(currentElement).val();
+	var startDate=$('#startdate').parents('div.form-group');
+	var endDate=$('#enddate').parents('div.form-group');
+	if(currentSelection==='partial'){
+		startDate.show();
+		endDate.show();
+		
+	}else if(currentSelection==='full'){
+		startDate.hide();
+		endDate.hide();
+	}
+}
+
+function updateDatabase(){
+	//Preventing form submit as it will lead to page refresh
+	event.preventDefault();
+	//Get Form data
+	var formData = $('.update-database-form').serialize();
+	//Send Ajax Request
+	var resultsDiv = $('.strike-results div');
+	$.ajax({
+		url: "../app/controllers/AdminManageDatabaseController.php",
+		type: "post",
+		data: formData,
+		success: function (response) {
+			$('#myModal').show();
+			console.log(response);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+		   console.log(textStatus, errorThrown);
+		}
+	});
+	
+}
+
+/* -----------------------------JS for Admin Pages------------------------END-----------------------*/

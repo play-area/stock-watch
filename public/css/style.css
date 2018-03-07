@@ -35,7 +35,7 @@
 	}
 
 	fieldset{
-		border: 1px solid #f3eded;
+		border: 2px solid #f3eded;
 		border-radius: 5px;
 		padding: 15px;
 		margin:5px 5px 10px 0px;
@@ -51,7 +51,7 @@
 		margin:1% 0;
 	}
 	.row-separator{
-		border: 0.5px solid #f3eded;
+		border: 1px solid #f3eded;
 		margin: 2% 0;
 	}
 	.font-weight-200{
@@ -233,12 +233,12 @@
 
 /* ############# Index Page Css End ##################*/
 
-/* ############# Manage Page Css Start ##################*/
+/* ############# Admin Pages Css Start ##################*/
 
 
 
 
-/* ############# Manage Page Css End ##################*/
+/* ############# Admin Pages Css End ##################*/
 
 
 /* ############# Screener Page Css Start ##################*/

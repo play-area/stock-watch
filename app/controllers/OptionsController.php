@@ -1,9 +1,6 @@
 <?php
 
 require '../model/optionsCalculations.php';
-if(isset($_POST["options-form"])){
-   echo "Options form been submitted";
-}
 if(count($_POST)>0) {
 	//Checking if Calculate stats form has been submitted based on value of hidden input field act
 	if($_POST["act"]==="calculate-strikes"){
