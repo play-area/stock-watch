@@ -60,7 +60,7 @@
 					</div>
 					<div class="form-group">
 						<input class="btn btn-success" type="submit"/>
-					</div
+					</div>
 				</fieldset>
 			</form>
         </div>

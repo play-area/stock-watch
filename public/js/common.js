@@ -30,6 +30,19 @@ $(function() {
 			$('#end-day').parents('div.form-group').show();
 		}
 	});
+	
+	//Ajax Request on Update Database Page
+	$.ajax({
+		url: "../app/controllers/AdminManageDatabaseController.php",
+		type: "get",
+		success: function (response) {
+			$('#onload-results').html(response);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+		   console.log(textStatus, errorThrown);
+		}
+	});
+	
 });
 
 function updateCalculations(){
@@ -146,14 +159,22 @@ function updateDatabase(){
 	//Get Form data
 	var formData = $('.update-database-form').serialize();
 	//Send Ajax Request
-	var resultsDiv = $('.strike-results div');
+	var resultsDiv 		= 	$('#results-div');
+	var logsMessageDiv  =	$('#logs-message');
+	var onLoadResultsDiv =	$('#onload-results');
+	resultsDiv.hide();
+	logsMessageDiv.hide();
+	onLoadResultsDiv.show();
+	onLoadResultsDiv.html('Updating Database , please wait...<br/><br/><img src="images/spinners/spinner1.gif">');
 	$.ajax({
 		url: "../app/controllers/AdminManageDatabaseController.php",
 		type: "post",
 		data: formData,
 		success: function (response) {
-			$('#myModal').show();
-			console.log(response);
+			resultsDiv.html(response);
+			resultsDiv.show();
+			logsMessageDiv.show();
+			onLoadResultsDiv.hide();
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 		   console.log(textStatus, errorThrown);

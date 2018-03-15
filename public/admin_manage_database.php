@@ -64,7 +64,7 @@
 						<div class="selectContainer border">
 							<select id="watchlist" name="watchlist" class="form-control">
 								<option value="liquid-options">Liquid Options</option>
-								<option value="f&o">F & O</option>
+								<option value="f&o">FO</option>
 							</select>
 						</div>
 					</div>
@@ -90,7 +90,7 @@
 						<input id="enddate" name="enddate" type="date" placeholder="mm/dd/yyyy"/>
 					</div>
 					<div class="form-group">
-						<input class="btn btn-success" type="submit" value="Update"></button>
+						<input class="btn btn-success" type="submit" value="Update"/>
 					</div>
 					<div class="form-group">
 						<input type="hidden" name="act" value="update-database"/>
@@ -99,9 +99,11 @@
 			</form>
         </div>
 		
-        <div class="col-lg-8">
+        <div class="col-lg-8 update-results">
 			<h4>Update Database Logs</h4>
-			Please check the full logs <a href="admin_database_logs.php">here</a>
+			<div id="results-div"></div>
+			<div id="logs-message">Please check the full logs <a href="admin_database_logs.php">here</a></div>
+			<div id="onload-results"></div>
         </div>
     </div>
     <!-- /.row -->
@@ -135,7 +137,7 @@
 						<label for="defaultCheck1" class="font-weight-600">MA 50</label>
 					</div>
 					<div class="form-group">
-						<input class="btn btn-success" type="submit" value="Update"></button>
+						<input class="btn btn-success" type="submit" value="Update"/>
 					</div>
 					<div class="form-group">
 						<input type="hidden" name="act" value="update-calculations"/>

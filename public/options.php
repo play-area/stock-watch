@@ -85,7 +85,7 @@
 						<input type="text" class="form-control" name="days-to-expiry" id="days-to-expiry">
 					</div>
 					<div class="form-group">
-						<input class="btn btn-success" type="submit" value="Calculate"></button>
+						<input class="btn btn-success" type="submit" value="Calculate"/>
 					</div>
 					<div class="form-group">
 						<input type="hidden" name="act" value="calculate-strikes"/>
@@ -120,7 +120,7 @@
 							<td>3 SD</td>
 							<td>129</td>
 							<td>152</td>
-						</tr
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -159,9 +159,9 @@
 						</div>
 					</div> 
 					<div class="form-group">
-						<label class="control-label font-weight-600">Price Variation</label></br>
-						Lower Price Range <=<input type="text" class="form-control" name="lower-price" id="lower-price"></br>
-						Upper Price Range >=<input type="text" class="form-control" name="upper-price" id="upper-price">
+						<label class="control-label font-weight-600">Price Variation</label><br/>
+						Lower Price Range <input type="text" class="form-control" name="lower-price" id="lower-price"><br/>
+						Upper Price Range <input type="text" class="form-control" name="upper-price" id="upper-price">
 					</div>
 					<div class="form-group" style="display:none">
 						<label class="control-label font-weight-600">Start Day</label>
