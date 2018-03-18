@@ -29,5 +29,8 @@ if(count($_POST)>0) {
 		}
 	}
 
+}else{
+    //If Request is other than POST
+    getOptionsList();
 }
 ?>

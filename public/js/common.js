@@ -27,21 +27,16 @@ $(function() {
 			$('#end-day').parents('div.form-group').show();
 		}else if(optionValue ==="Monthly"){
 			$('#start-day').parents('div.form-group').hide();
-			$('#end-day').parents('div.form-group').show();
+			$('#end-day').parents('div.form-group').hide();
 		}
 	});
 	
-	//Ajax Request on Update Database Page
-	$.ajax({
-		url: "../app/controllers/AdminManageDatabaseController.php",
-		type: "get",
-		success: function (response) {
-			$('#onload-results').html(response);
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-		   console.log(textStatus, errorThrown);
-		}
-	});
+	//Ajax request to show database stats on load of Admin Update Database page
+	getUpdateDatabaseStats();
+	
+	//Ajax request to show Options Symbol list on load of Options page
+	getOptionsSymbolList();
+	
 	
 });
 
@@ -82,6 +77,21 @@ function updateCalculations(){
 }
 
 /* -----------------------------JS for Options Page --------------------- START----------- -------------*/
+
+//Function for Ajax Request to show symbol list
+function getOptionsSymbolList(){
+	$.ajax({
+		url: "../app/controllers/OptionsController.php",
+		type: "get",
+		success: function (response) {
+			$('#calculations-symbol-list').html(response);
+			$('#strikes-symbol-list').html(response);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+		   console.log(textStatus, errorThrown);
+		}
+	});
+}
 
 function calculateStockStats(){
 	//Preventing form submit as it will lead to page refresh
@@ -138,6 +148,21 @@ function showHideManualEntry(currentElement){
 /* -----------------------------JS for Options Page --------------------- END----------- -------------*/
 
 /* -----------------------------JS for Admin Pages------------------------START-----------------------*/
+
+//Function for Ajax Request on Update Database Page
+function getUpdateDatabaseStats(){
+	$.ajax({
+		url: "../app/controllers/AdminManageDatabaseController.php",
+		type: "get",
+		success: function (response) {
+			$('#onload-results').html(response);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+		   console.log(textStatus, errorThrown);
+		}
+	});
+}
+
 
 function showHideUpdateDatabaseDates(currentElement){
 	var currentSelection = $(currentElement).val();

@@ -194,7 +194,7 @@ function getWeeklyPriceRange($symbol,$lowerPrice=0,$upperPrice=0,$startDay,$endD
 	}
 	
 	foreach($queryResults as $result){
-		$dayNo=getDayNumber($result['dayofweek']);
+	    $dayNo=getDayNumber(date('l',strtotime($result['recorddate'])));
 		$prevRecord=$queryResults[$i-1>0?$i-1:0];
 		$nextRecord=$queryResults[$i+1<count($queryResults)?$i+1:count($queryResults)-1];
 				
@@ -249,8 +249,7 @@ function getWeeklyPriceRange($symbol,$lowerPrice=0,$upperPrice=0,$startDay,$endD
 //Function to Get Database Records
 function getDatabaseRecords($symbol){
 	
-	$tableName="daily_".$symbol;
-	$dailyTimeframeQuery="SELECT * from ".$tableName." Order By recorddate ASC";
+	$dailyTimeframeQuery="SELECT * from data_quandl_daily_liquid_options where symbol= ? ORDER BY recorddate ASC";
 	$queryResults=null;
 	
 	$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
@@ -261,21 +260,23 @@ function getDatabaseRecords($symbol){
 	/* create a prepared statement */
 	$stmt = $conn->prepare($dailyTimeframeQuery);
 	
+	/* Binding Parameters */
+	$stmt->bind_param("s", $symbol);
+	
     /* execute query */
     $stmt->execute();
 
     /* bind result variables */
-    $stmt->bind_result($recorddate,$dayofweek,$open,$high,$low,$close,$volume,$turnover);
+    $stmt->bind_result($recorddate,$symbol,$open,$high,$low,$close,$volume);
 	$i=0;
 	while ($stmt->fetch()) {
 		$queryResults[] = array('recorddate' => $recorddate,
-			'dayofweek' => $dayofweek,
+		    'symbol'  => $symbol,
 			'open' => $open,
 			'high' => $high,
 			'low' => $low,
 			'close' => $close,
-			'volume' => $volume,
-			'turnover'=>$turnover);
+			'volume' => $volume);
 		$i++;
 	}
 	$stmt->close();
@@ -321,3 +322,23 @@ function getDayNumber($dayOfWeek){
 	}
 }
 
+function getOptionsList(){
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    
+    /* getting results*/
+    $result =$conn->query("Select * FROM watchlist_liquid_options");
+    
+    $symbolList = array();
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) {
+            echo("<option value='".$row["symbol"]."'>".$row["symbol"]."</option>");
+        }
+    } else {
+        echo "List Could not be loaded ...";
+    }    
+}

@@ -63,7 +63,7 @@
 						<label class="control-label font-weight-600">Watch List</label>
 						<div class="selectContainer border">
 							<select id="watchlist" name="watchlist" class="form-control">
-								<option value="liquid-options">Liquid Options</option>
+								<option value="liquid_options">Liquid Options</option>
 								<option value="f&o">FO</option>
 							</select>
 						</div>

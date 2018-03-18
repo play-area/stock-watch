@@ -142,11 +142,21 @@ CREATE TABLE IF NOT EXISTS `daily_ashokley` (
 CREATE TABLE IF NOT EXISTS `data_quandl_daily_liquid_options`(
 	`recorddate` date NOT NULL,
 	`symbol` varchar(256) NOT NULL,
-	`open` decimal(8,4) unsigned NOT NULL,
-	`high` decimal(8,4) unsigned NOT NULL,
-	`low` decimal(8,4) unsigned NOT NULL,
-	`close` decimal(8,4) unsigned NOT NULL,
-	`volume` bigint(20) unsigned NOT NULL,
+	`open` decimal(12,4) unsigned NOT NULL,
+	`high` decimal(12,4) unsigned NOT NULL,
+	`low` decimal(12,4) unsigned NOT NULL,
+	`close` decimal(12,4) unsigned NOT NULL,
+	`volume` bigint(40) unsigned NOT NULL,
 	PRIMARY KEY (recorddate,symbol)
 );
 /* Creating Data Tables ******************************** END ********************************/
+
+/* Creating Watchlist Tables *************************** START ******************************/
+CREATE TABLE IF NOT EXISTS `watchlist_liquid_options`(
+	`sl_no` int NOT NULL AUTO_INCREMENT,
+	`symbol` varchar(256) NOT NULL,
+	`company_name` varchar(256),
+	PRIMARY KEY (sl_no,symbol)
+);
+ ALTER TABLE `watchlist_liquid_options` AUTO_INCREMENT = 1;
+/* Creating Watchlist Tables *************************** END *******************************/

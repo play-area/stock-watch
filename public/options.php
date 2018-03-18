@@ -52,13 +52,7 @@
 					<div class="form-group">
 						<label class="control-label font-weight-600">Symbol</label>
 						<div class="selectContainer border">
-							<select id="symbol" name="symbol" class="form-control">
-								<option value="banknifty">BANK NIFTY</option>
-								<option value="nifty">NIFTY</option>
-								<option value="usdinr">USD/INR</option>
-								<option value="sbin">SBIN</option>
-								<option value="reliance">RELIANCE</option>
-								<option value="ashokley">ASHOKLEY</option>
+							<select id="strikes-symbol-list" name="symbol"  class="form-control">
 							</select>
 						</div>
 					</div>
@@ -139,13 +133,7 @@
 					<div class="form-group">
 						<label class="control-label font-weight-600">Symbol</label>
 						<div class="selectContainer border">
-							<select id="symbol" name="symbol" class="form-control">
-								<option value="banknifty">BANK NIFTY</option>
-								<option value="nifty">NIFTY</option>
-								<option value="usdinr">USD/INR</option>
-								<option value="sbin">SBIN</option>
-								<option value="reliance">RELIANCE</option>
-								<option value="ashokley">ASHOKLEY</option>
+							<select id="calculations-symbol-list" name="symbol"  class="form-control">
 							</select>
 						</div>
 					</div>
