@@ -25,7 +25,7 @@
       </ol>
 
       <!-- Image Header -->
-      <img class="img-fluid rounded mb-4" src="images/backgrounds/1200X300.png" alt="">
+      <!-- <img class="img-fluid rounded mb-4" src="images/backgrounds/1200X300.png" alt="">-->
 
       <!-- Marketing Icons Section -->
       <div class="row">

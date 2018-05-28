@@ -322,7 +322,7 @@ function getDayNumber($dayOfWeek){
 	}
 }
 
-function getOptionsList(){
+function getOptionsSymbolList(){
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     // Check connection
     if ($conn->connect_error) {
@@ -342,3 +342,5 @@ function getOptionsList(){
         echo "List Could not be loaded ...";
     }    
 }
+
+?>

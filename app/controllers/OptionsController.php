@@ -1,6 +1,6 @@
 <?php
 
-require '../model/optionsCalculations.php';
+require '../model/OptionsCalculations.php';
 if(count($_POST)>0) {
 	//Checking if Calculate stats form has been submitted based on value of hidden input field act
 	if($_POST["act"]==="calculate-strikes"){
@@ -31,6 +31,6 @@ if(count($_POST)>0) {
 
 }else{
     //If Request is other than POST
-    getOptionsList();
+    getOptionsSymbolList();
 }
 ?>

@@ -52,8 +52,7 @@ function updateCalculations(){
             console.log($(this).attr('id')+" is Checked");
         }
 	});
-	var date= $('.calculations-form  #calculationdate');
-	console.log(date.val());
+	var formData = $('.calculations-form').serialize();
 	
 	alertSuccess.hide();
 	alertDanger.hide();
@@ -61,9 +60,9 @@ function updateCalculations(){
 	
 	//Send Ajax Request
 	$.ajax({
-		url: "../app/controllers/performCalculationsController.php",
+		url: "../app/controllers/AdminManageDatabaseController.php",
 		type: "post",
-		data: date,
+		data: formData,
 		success: function (response) {
 			//console.log(response); 
 			event.stopImmediatePropagation();
