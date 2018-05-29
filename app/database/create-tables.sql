@@ -50,7 +50,36 @@ CREATE TABLE IF NOT EXISTS `daily_candlesticks_fo_calculations` (
    PRIMARY KEY (symbol,market, recorddate)
 );
 
-CREATE TABLE IF NOT EXISTS `watchlist_nifty_500` (
+
+
+/* SQL for new database design */
+
+/* Creating Data Tables ******************************** START ********************************/
+
+CREATE TABLE IF NOT EXISTS `data_quandl_daily_liquid_options`(
+	`recorddate` date NOT NULL,
+	`symbol` varchar(256) NOT NULL,
+	`open` decimal(12,4) unsigned NOT NULL,
+	`high` decimal(12,4) unsigned NOT NULL,
+	`low` decimal(12,4) unsigned NOT NULL,
+	`close` decimal(12,4) unsigned NOT NULL,
+	`volume` bigint(40) unsigned NOT NULL,
+	PRIMARY KEY (recorddate,symbol)
+);
+
+/* Creating Data Tables ******************************** END ********************************/
+
+/* Creating Watchlist Tables *************************** START ******************************/
+
+CREATE TABLE IF NOT EXISTS `watchlist_liquid_options`(
+	`sl_no` int NOT NULL AUTO_INCREMENT,
+	`symbol` varchar(256) NOT NULL,
+	`company_name` varchar(256),
+	PRIMARY KEY (sl_no,symbol)
+);
+ ALTER TABLE `watchlist_liquid_options` AUTO_INCREMENT = 1;
+ 
+ CREATE TABLE IF NOT EXISTS `watchlist_nifty_500` (
   `company_name` varchar(256) NOT NULL,
   `industry` varchar(256) NOT NULL,
   `symbol` varchar(10) NOT NULL,
@@ -65,98 +94,31 @@ CREATE TABLE IF NOT EXISTS `watchlist_nifty_fo` (
    PRIMARY KEY (symbol)
 );
 
-CREATE TABLE IF NOT EXISTS `daily_banknifty` (
-  `recorddate` date NOT NULL,
-  `dayofweek` varchar(10) NOT NULL,
-  `open` decimal(8,2) unsigned NOT NULL,
-  `high` decimal(8,2) unsigned NOT NULL,
-  `low` decimal(8,2) unsigned NOT NULL,
-  `close` decimal(8,2) unsigned NOT NULL,
-  `volume` bigint(20) unsigned NOT NULL,
-  `turnover` bigint(20) unsigned NOT NULL,
-   PRIMARY KEY (recorddate)
-);
-
-CREATE TABLE IF NOT EXISTS `daily_nifty` (
-  `recorddate` date NOT NULL,
-  `dayofweek` varchar(10) NOT NULL,
-  `open` decimal(8,2) unsigned NOT NULL,
-  `high` decimal(8,2) unsigned NOT NULL,
-  `low` decimal(8,2) unsigned NOT NULL,
-  `close` decimal(8,2) unsigned NOT NULL,
-  `volume` bigint(20) unsigned NOT NULL,
-  `turnover` bigint(20) unsigned NOT NULL,
-   PRIMARY KEY (recorddate)
-);
-
-CREATE TABLE IF NOT EXISTS `daily_usdinr` (
-  `recorddate` date NOT NULL,
-  `dayofweek` varchar(10) NOT NULL,
-  `open` decimal(8,3) unsigned NOT NULL,
-  `high` decimal(8,3) unsigned NOT NULL,
-  `low` decimal(8,3) unsigned NOT NULL,
-  `close` decimal(8,3) unsigned NOT NULL,
-  `volume` bigint(20) unsigned NOT NULL,
-  `turnover` bigint(20) unsigned NOT NULL,
-   PRIMARY KEY (recorddate)
-);
-
-CREATE TABLE IF NOT EXISTS `daily_sbin` (
-  `recorddate` date NOT NULL,
-  `dayofweek` varchar(10) NOT NULL,
-  `open` decimal(8,2) unsigned NOT NULL,
-  `high` decimal(8,2) unsigned NOT NULL,
-  `low` decimal(8,2) unsigned NOT NULL,
-  `close` decimal(8,2) unsigned NOT NULL,
-  `volume` bigint(20) unsigned NOT NULL,
-  `turnover` bigint(20) unsigned NOT NULL,
-   PRIMARY KEY (recorddate)
-);
-
-CREATE TABLE IF NOT EXISTS `daily_reliance` (
-  `recorddate` date NOT NULL,
-  `dayofweek` varchar(10) NOT NULL,
-  `open` decimal(8,2) unsigned NOT NULL,
-  `high` decimal(8,2) unsigned NOT NULL,
-  `low` decimal(8,2) unsigned NOT NULL,
-  `close` decimal(8,2) unsigned NOT NULL,
-  `volume` bigint(20) unsigned NOT NULL,
-  `turnover` bigint(20) unsigned NOT NULL,
-   PRIMARY KEY (recorddate)
-);
-
-CREATE TABLE IF NOT EXISTS `daily_ashokley` (
-  `recorddate` date NOT NULL,
-  `dayofweek` varchar(10) NOT NULL,
-  `open` decimal(8,2) unsigned NOT NULL,
-  `high` decimal(8,2) unsigned NOT NULL,
-  `low` decimal(8,2) unsigned NOT NULL,
-  `close` decimal(8,2) unsigned NOT NULL,
-  `volume` bigint(20) unsigned NOT NULL,
-  `turnover` bigint(20) unsigned NOT NULL,
-   PRIMARY KEY (recorddate)
-);
-
-/* SQL for new database design */
-/* Creating Data Tables ******************************** START ********************************/
-CREATE TABLE IF NOT EXISTS `data_quandl_daily_liquid_options`(
-	`recorddate` date NOT NULL,
-	`symbol` varchar(256) NOT NULL,
-	`open` decimal(12,4) unsigned NOT NULL,
-	`high` decimal(12,4) unsigned NOT NULL,
-	`low` decimal(12,4) unsigned NOT NULL,
-	`close` decimal(12,4) unsigned NOT NULL,
-	`volume` bigint(40) unsigned NOT NULL,
-	PRIMARY KEY (recorddate,symbol)
-);
-/* Creating Data Tables ******************************** END ********************************/
-
-/* Creating Watchlist Tables *************************** START ******************************/
-CREATE TABLE IF NOT EXISTS `watchlist_liquid_options`(
-	`sl_no` int NOT NULL AUTO_INCREMENT,
-	`symbol` varchar(256) NOT NULL,
-	`company_name` varchar(256),
-	PRIMARY KEY (sl_no,symbol)
-);
- ALTER TABLE `watchlist_liquid_options` AUTO_INCREMENT = 1;
 /* Creating Watchlist Tables *************************** END *******************************/
+
+/* Creating Calculation Tables *************************** START ******************************/
+
+CREATE TABLE IF NOT EXISTS `calculations_daily_liquid_options` (
+  `symbol` varchar(10) NOT NULL,
+  `market` varchar(10) NOT NULL DEFAULT 'NSE',
+  `recorddate` date NOT NULL,
+  `open` decimal(8,2) unsigned NOT NULL,
+  `high` decimal(8,2) unsigned NOT NULL,
+  `low` decimal(8,2) unsigned NOT NULL,
+  `close` decimal(8,2) unsigned NOT NULL,
+  `prevclose` decimal(8,2) unsigned NOT NULL,
+  `volume` bigint(20) unsigned NOT NULL,
+  `candle_body` decimal(8,2) unsigned ,
+  `candle_height` decimal(8,2) unsigned ,
+  `change_value` decimal(8,2) NOT NULL ,
+  `change_percent` decimal(8,2) NOT NULL,
+  `volavg50` bigint(20) unsigned NOT NULL,
+  `ma20` decimal(8,2) unsigned NOT NULL,
+  `ma50` decimal(8,2) unsigned NOT NULL,
+  `avg_candle_body_50` decimal(8,2) unsigned NOT NULL,
+  `avg_candle_height_50` decimal(8,2) unsigned NOT NULL,
+   PRIMARY KEY (symbol,market, recorddate)
+);
+
+/* Creating Calculation Tables *************************** END ******************************/
+

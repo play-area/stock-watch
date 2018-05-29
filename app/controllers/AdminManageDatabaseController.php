@@ -14,7 +14,7 @@ if(count($_POST)>0) {
 		updateDatabase($_POST["data-source"],$_POST["watchlist"],$_POST["time-frame"],$_POST["update-type"],$_POST["startdate"],$_POST["enddate"]);
 	}
 	else if($_POST["act"]==="update-calculations"){
-	  echo("update-calculations called");  
+	    updateCalculations();
 	}
 }
 else{
