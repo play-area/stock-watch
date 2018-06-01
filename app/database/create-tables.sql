@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `calculations_daily_liquid_options` (
   `volume` bigint(20) unsigned NOT NULL,
   `candle_body` decimal(8,2) unsigned ,
   `candle_height` decimal(8,2) unsigned ,
+  `candle_type` varchar(50),
   `change_value` decimal(8,2) NOT NULL ,
   `change_percent` decimal(8,2) NOT NULL,
   `volavg50` bigint(20) unsigned NOT NULL,

@@ -160,10 +160,10 @@ function storeCalculationsInDatabase($arrayToStore){
         die("Connection failed: " . $conn->connect_error);
     }
     $errorList=array();
-    $insert = $conn->prepare("INSERT INTO calculations_daily_liquid_options (symbol, recorddate, open, high, low, close,prevclose, volume, candle_body, candle_height, change_value, change_percent,volavg50,ma20,ma50,avg_candle_body_50,avg_candle_height_50) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    $insert = $conn->prepare("INSERT INTO calculations_daily_liquid_options (symbol, recorddate, open, high, low, close,prevclose, volume, candle_body, candle_height, candle_type, change_value, change_percent,volavg50,ma20,ma50,avg_candle_body_50,avg_candle_height_50) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
     foreach ($arrayToStore as $arrayRecord) {
         foreach($arrayRecord as $record){
-            $insert->bind_param("sssssssssssssssss",
+            $insert->bind_param("ssssssssssssssssss",
                 $record['symbol'],
                 $record['recorddate'],
                 $record['open'],
@@ -174,6 +174,7 @@ function storeCalculationsInDatabase($arrayToStore){
                 $record['volume'],
                 $record['candleBody'],
                 $record['candleHeight'],
+                $record['candleType'],
                 $record['change'],
                 $record['changePercent'],
                 $record['avgVol'],
