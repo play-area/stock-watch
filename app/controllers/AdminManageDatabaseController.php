@@ -14,7 +14,12 @@ if(count($_POST)>0) {
 		updateDatabase($_POST["data-source"],$_POST["watchlist"],$_POST["time-frame"],$_POST["update-type"],$_POST["startdate"],$_POST["enddate"]);
 	}
 	else if($_POST["act"]==="update-calculations"){
-	    updateCalculations();
+	    if($_POST["update-type-calculations"]==="partial"){
+	        if(!validateDates($_POST["startdate-calculations"],$_POST["enddate-calculations"])){
+	            return;
+	        }
+	    }
+	    updateCalculations($_POST["update-type-calculations"],$_POST["startdate-calculations"],$_POST["enddate-calculations"]);
 	}
 }
 else{

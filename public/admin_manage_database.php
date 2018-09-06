@@ -117,24 +117,17 @@
 			<form class="calculations-form" method="post" onsubmit="updateCalculations()">
 				<fieldset>
 					<div class="form-group">
-						<label for="calculationdate" class="font-weight-600">Date</label>
-						<input id="calculationdate" name="calculationdate" type="date" value="2018-01-02" required />
+						<label class="control-label font-weight-600">Update Type</label><br/>
+						<input type="radio" name="update-type-calculations" value="full" checked onclick="showHideUpdateDatabaseDates(this)"/> Full Update
+						<input type="radio" name="update-type-calculations" value="partial" onclick="showHideUpdateDatabaseDates(this)"/>Partial Update
 					</div>
-					<div class="form-group">
-						<input type="checkbox" class="calculation-checkbox" id="avgcandle50" checked />
-						<label for="defaultCheck1" class="font-weight-600">Avg Candle 50</label>
+					<div class="form-group" style="display:none">
+						<label for="startdate-calculations" class="font-weight-600">Start Date</label>
+						<input id="startdate-calculations" name="startdate-calculations" type="date" placeholder="mm/dd/yyyy" />
 					</div>
-					<div class="form-group">
-						<input type="checkbox" class="calculation-checkbox" id="avgvolume50" checked />
-						<label for="defaultCheck1" class="font-weight-600">Avg Volume 50</label>
-					</div>
-					<div class="form-group">
-						<input type="checkbox" class="calculation-checkbox" id="ma20" checked />
-						<label for="defaultCheck1" class="font-weight-600">MA 20</label>
-					</div>
-					<div class="form-group">
-						<input type="checkbox" class="calculation-checkbox" id="ma50" checked />
-						<label for="defaultCheck1" class="font-weight-600">MA 50</label>
+					<div class="form-group"style="display:none" >
+						<label for="enddate-calculations" class="font-weight-600">End Date</label>
+						<input id="enddate-calculations" name="enddate-calculations" type="date" placeholder="mm/dd/yyyy"/>
 					</div>
 					<div class="form-group">
 						<input class="btn btn-success" type="submit" value="Update"/>
@@ -148,6 +141,7 @@
 		<div class="col-lg-8">
 			<h4>Calculation Logs</h4>
 			Please check the full logs <a href="admin_database_logs.php">here</a>
+			<div id="onload-calc-results"></div>
 		</div>
     </div>
     <!-- /.row -->

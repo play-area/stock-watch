@@ -40,40 +40,7 @@ $(function() {
 	
 });
 
-function updateCalculations(){
-	//Preventing form submit as it will lead to page refresh
-	event.preventDefault();
-	var formCheckBoxes=$('.calculations-form  .calculation-checkbox');
-	var alertSuccess = $('.alerts-row .alert-success');
-	var alertDanger = $('.alerts-row .alert-danger');
-	var alertInfo = $('.alerts-row .alert-info');
-	formCheckBoxes.each(function() {
-	  if ($(this).is(":checked")) {
-            console.log($(this).attr('id')+" is Checked");
-        }
-	});
-	var formData = $('.calculations-form').serialize();
-	
-	alertSuccess.hide();
-	alertDanger.hide();
-	alertInfo.hide();
-	
-	//Send Ajax Request
-	$.ajax({
-		url: "../app/controllers/AdminManageDatabaseController.php",
-		type: "post",
-		data: formData,
-		success: function (response) {
-			//console.log(response); 
-			event.stopImmediatePropagation();
-			alertInfo.find('div').html(response);
-			alertInfo.fadeIn(2000);
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-		   console.log(textStatus, errorThrown);
-		}
-	});
-}
+
 
 /* -----------------------------JS for Options Page --------------------- START----------- -------------*/
 
@@ -165,16 +132,31 @@ function getUpdateDatabaseStats(){
 
 function showHideUpdateDatabaseDates(currentElement){
 	var currentSelection = $(currentElement).val();
-	var startDate=$('#startdate').parents('div.form-group');
-	var endDate=$('#enddate').parents('div.form-group');
-	if(currentSelection==='partial'){
-		startDate.show();
-		endDate.show();
-		
-	}else if(currentSelection==='full'){
-		startDate.hide();
-		endDate.hide();
+	var currentSelectionName = $(currentElement).attr('name');
+	if(currentSelectionName==='update-type'){
+		var startDate=$('#startdate').parents('div.form-group');
+		var endDate=$('#enddate').parents('div.form-group');
+		if(currentSelection==='partial'){
+			startDate.show();
+			endDate.show();
+			
+		}else if(currentSelection==='full'){
+			startDate.hide();
+			endDate.hide();
+		}
+	}else if(currentSelectionName==='update-type-calculations'){
+		var startDate=$('#startdate-calculations').parents('div.form-group');
+		var endDate=$('#enddate-calculations').parents('div.form-group');
+		if(currentSelection==='partial'){
+			startDate.show();
+			endDate.show();
+			
+		}else if(currentSelection==='full'){
+			startDate.hide();
+			endDate.hide();
+		}
 	}
+	
 }
 
 function updateDatabase(){
@@ -205,6 +187,46 @@ function updateDatabase(){
 		}
 	});
 	
+}
+
+function updateCalculations(){
+	//Preventing form submit as it will lead to page refresh
+	event.preventDefault();
+	var formCheckBoxes=$('.calculations-form  .calculation-checkbox');
+	var alertSuccess = $('.alerts-row .alert-success');
+	var alertDanger = $('.alerts-row .alert-danger');
+	var alertInfo = $('.alerts-row .alert-info');
+	var onLoadResultsDiv =	$('#onload-calc-results');
+	formCheckBoxes.each(function() {
+	  if ($(this).is(":checked")) {
+            console.log($(this).attr('id')+" is Checked");
+        }
+	});
+	var formData = $('.calculations-form').serialize();
+	
+	alertSuccess.hide();
+	alertDanger.hide();
+	alertInfo.hide();
+	
+	onLoadResultsDiv.show();
+	onLoadResultsDiv.html('Updating Calculations , please wait...<br/><br/><img src="images/spinners/spinner1.gif">');
+	
+	//Send Ajax Request
+	$.ajax({
+		url: "../app/controllers/AdminManageDatabaseController.php",
+		type: "post",
+		data: formData,
+		success: function (response) {
+			//console.log(response); 
+			event.stopImmediatePropagation();
+			onLoadResultsDiv.hide();
+			alertInfo.find('div').html(response);
+			alertInfo.fadeIn(2000);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+		   console.log(textStatus, errorThrown);
+		}
+	});
 }
 
 /* -----------------------------JS for Admin Pages------------------------END-----------------------*/

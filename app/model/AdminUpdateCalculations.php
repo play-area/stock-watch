@@ -1,7 +1,9 @@
 <?php
 
 /** Defining Querries */
-define('DATE_LIST_QUERY', 'SELECT dc1.symbol, dc1.recorddate, dc1.open,dc1.high,dc1.low,dc1.close,dc1.volume FROM data_quandl_daily_liquid_options AS dc1 INNER JOIN(SELECT DISTINCT recorddate FROM data_quandl_daily_liquid_options ORDER BY recorddate desc limit ?) as dc2 ON dc1.recorddate=dc2.recorddate GROUP BY dc1.symbol,dc1.recorddate');
+define('DATE_LIST_FULL_QUERY', 'SELECT dc1.symbol, dc1.recorddate, dc1.open,dc1.high,dc1.low,dc1.close,dc1.volume FROM data_quandl_daily_liquid_options AS dc1 INNER JOIN(SELECT DISTINCT recorddate FROM data_quandl_daily_liquid_options ORDER BY recorddate desc limit ?) as dc2 ON dc1.recorddate=dc2.recorddate GROUP BY dc1.symbol,dc1.recorddate');
+
+define('DATE_LIST_PARTIAL_QUERY', 'SELECT dc1.symbol, dc1.recorddate, dc1.open,dc1.high,dc1.low,dc1.close,dc1.volume FROM data_quandl_daily_liquid_options AS dc1 WHERE recorddate>=? AND recorddate<=? GROUP BY dc1.symbol,dc1.recorddate');
 
 define('WORKING_DAYS','SELECT T1.date_selected FROM (SELECT (CURRENT_DATE - INTERVAL 100 DAY) + INTERVAL a + b DAY AS date_selected
 FROM (SELECT 0 a UNION SELECT 1 a UNION SELECT 2 UNION SELECT 3
@@ -32,7 +34,7 @@ function checkDataInTable($noOfDays){
 }
 
 /* Getting Results from database and performing calculations */
-function updateCalculations($noOfDays=550){
+function updateCalculations($updateType,$startDate,$endDate,$tz = "Asia/Kolkata",$noOfDays=550){
     /*$errorDates=checkDataInTable($noOfDays);
      if(!empty($errorDates)){
      echo("</br><h3>Please check the following dates in the <b>Daily Candlesticks</b> table:</h3></br>");
@@ -41,24 +43,33 @@ function updateCalculations($noOfDays=550){
      }
      return;
      }*/
+    $startTime  = time();
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    /* create a prepared statement */
-    $stmt = $conn->prepare(DATE_LIST_QUERY);
+    if($updateType==='full'){
+        $stmt = $conn->prepare(DATE_LIST_FULL_QUERY);
+        $stmt->bind_param("s", $noOfDays);
+        $stmt->execute();
+    }else if($updateType==='partial'){
+        $stmt = $conn->prepare(DATE_LIST_PARTIAL_QUERY);
+        $stmt->bind_param("ss", $startDate,$endDate);
+        $stmt->execute();
+    }
     
-    /* bind parameters for markers */
-    $stmt->bind_param("s", $noOfDays);
-    
-    /* execute query */
-    $stmt->execute();
     
     /* bind result variables */
     $stmt->bind_result($symbol,$recorddate,$open,$high,$low,$close,$volume);
-    $i=0;
+    $previousSymbol = null;
     while ($stmt->fetch()) {
+        if($previousSymbol!==null && $symbol!==$previousSymbol){
+            $symbolSpecificResults[] = array('symbol' => $previousSymbol,
+                'values' => $queryResults);
+            $queryResults = [];
+        }
+        $previousSymbol=$symbol;
         $queryResults[] = array('symbol' => $symbol,
             'recorddate' => $recorddate,
             'open' => $open,
@@ -66,12 +77,6 @@ function updateCalculations($noOfDays=550){
             'low' => $low,
             'close' => $close,
             'volume' => $volume);
-        if(($i+1)%$noOfDays == 0){
-            $symbolSpecificResults[] = array('symbol' => $symbol,
-                'values' => $queryResults);
-            $queryResults = [];
-        }
-        $i++;
     }
     $stmt->close();
     $conn->close();
@@ -79,9 +84,13 @@ function updateCalculations($noOfDays=550){
     foreach($symbolSpecificResults as $symbolSpecificResult) {
         $calculationResults[] =calculateEverything($symbolSpecificResult['values'],$noOfDays);
     }
+     
     if(!empty($calculationResults)){
+        deleteTableDataFromDatabase('calculations_daily_liquid_options',$updateType,$startDate,$endDate);
         storeCalculationsInDatabase($calculationResults);
     }
+    
+    echo("<span class='font-weight-600'>Total time(mins) = </span>".((time()-$startTime)/60));
 }
 
 
@@ -102,7 +111,7 @@ function calculateEverything($symbolSpecificData,$noOfDays){
         $volumes[] = $symbolSpecificData[$i]['volume'];
         $candleBodies[] = abs($symbolSpecificData[$i]['close']-$symbolSpecificData[$i]['open']);
         $candleHeights[] =abs($symbolSpecificData[$i]['high']-$symbolSpecificData[$i]['low']);
-        $candleType = 'Doji';
+        $candleType = getCandleType($symbolSpecificData[$i]['open'],$symbolSpecificData[$i]['high'],$symbolSpecificData[$i]['low'],$symbolSpecificData[$i]['close']);
         $change = round($symbolSpecificData[$i]['close']-$prevclose,2);
         $changePercent=calculateChangePercent($symbolSpecificData[$i]['close'],$prevclose);
         if($i>=50){
@@ -115,6 +124,53 @@ function calculateEverything($symbolSpecificData,$noOfDays){
         }
     }
     return $calculationResults;
+}
+
+/* Function to get the type of a candle 
+ * @return : Marubozu
+ * @return : Doji
+ * @return : Shooting Star
+ * @return : Hammer
+ * @return : Default value(None)
+ * */
+function getCandleType($open,$high,$low,$close){
+  //Marubozu :Body greater than 80% of total length of candle
+  //Doji : When top shadow is greater than 25% and bottom shadow is also greater than 25% of candle length.
+  //Shooting Star : When top shadow is greater than 40% of candle length and body is less than 30% of candle length and body greater than 5% of candle length
+  //Hanging Man : When bottom shadow is greater than 40% of candle length and body is less than 30% of candle length and body greater than 5% of candle length
+  
+  if($close >= $open){
+      $topShadow = $high -$close;
+      $bottomShadow =  $open - $low;
+      $body = $close - $open;
+      $candleLength =  $high - $low;
+  }else{
+      $topShadow = $high -$open;
+      $bottomShadow = $close -$low;
+      $body = $open - $close;
+      $candleLength =  $high - $low;
+  }
+  
+  if(getPercentage($body,$candleLength)>80){
+      return 'Marubozu';
+  }else if(getPercentage($topShadow,$candleLength)>25 && getPercentage($bottomShadow,$candleLength)>25){
+      return 'Doji';
+  }else if(getPercentage($topShadow,$candleLength)>40 && getPercentage($body,$candleLength)<30 && getPercentage($body,$candleLength)>5){
+      return 'Shooting Star';
+  }else if(getPercentage($bottomShadow,$candleLength)>40 && getPercentage($body,$candleLength)<30 && getPercentage($body,$candleLength)>5){
+      return 'Hammer';
+  }else{
+      return 'None';
+  }
+}
+
+function getPercentage($numerator,$denominator){
+    if($denominator!=0){
+        return ($numerator/$denominator)*100;
+    }else{
+        return 0;
+    }
+    
 }
 
 /* Function to Create array of calculated values*/
@@ -201,7 +257,7 @@ function storeCalculationsInDatabase($arrayToStore){
         echo("<table class='table table-striped'><tr><th>Symbol</th><th>Timestamp</th><th>Error</th></tr>");
         foreach($errorList as $error){
             //echo($error['symbol']);
-            echo("<tr><td>".$error['symbol']."</td><td>".$error['timestamp']."</td><td>".$error['error']."</td></tr>");
+            echo("<tr><td>".$error['symbol']."</td><td>".$error['recorddate']."</td><td>".$error['error']."</td></tr>");
         }
         echo("</table>");
     }
@@ -266,4 +322,22 @@ function getRecordDates($noOfDays){
     
     return $dates;
 }
+
+/* Function to get delete the table data*/
+function deleteTableDataFromDataBase($tableName,$updateType,$startDate,$endDate){
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    //To check for connection error
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    if($updateType==='full'){
+        $conn->query("Delete from $tableName");
+    }else if($updateType==='partial'){
+        $stmt = $conn->prepare("SELECT DISTINCT timestamp FROM daily_candlesticks_fo ORDER BY timestamp desc limit ?");
+        $stmt->bind_param("s", $noOfDays);
+        $stmt->execute();
+    }
+   
+}
+
 ?>
